@@ -1,0 +1,7 @@
+[user]
+	name = H Udaya Sankar
+	email = uday.shankar0214@gmail.com
+[credential]
+	helper = store
+[init]
+	defaultBranch = main
