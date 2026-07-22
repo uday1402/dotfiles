@@ -52,15 +52,21 @@ map("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature help" })
 
 map("n", "<leader>xrn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 
-map("n", "<leader>xca", vim.lsp.buf.code_action, { desc = "Code action" })
-
 map("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
 
--- Send all diagnostics to the quickfix list (use Trouble qflist / :copen to view)
-map("n", "<leader>dq", function()
-	vim.diagnostic.setqflist({ open = false })
-	vim.cmd("Trouble qflist open")
-end, { desc = "Diagnostics to quickfix" })
+local function jump_diagnostic(count)
+	return function()
+		local diagnostic = vim.diagnostic.jump({ count = count })
+		if diagnostic then
+			vim.schedule(function()
+				vim.diagnostic.open_float({ scope = "cursor", focus = false })
+			end)
+		end
+	end
+end
+
+map("n", "]d", jump_diagnostic(1), { desc = "Next diagnostic" })
+map("n", "[d", jump_diagnostic(-1), { desc = "Previous diagnostic" })
 
 -- Center screen after LSP jumps
 map("n", "gd", function()

@@ -1,3 +1,22 @@
+-- Keep only the server-selected overload in signature help. Blink otherwise
+-- renders every label returned by Pyright, which can look like duplicate
+-- signatures for overloaded functions.
+local function use_active_signature(source, context, callback)
+    return source:get_signature_help(context, function(signature_help)
+        if not signature_help or #signature_help.signatures <= 1 then
+            callback(signature_help)
+            return
+        end
+
+        local active_index = (signature_help.activeSignature or 0) + 1
+        local active_signature = signature_help.signatures[active_index] or signature_help.signatures[1]
+
+        signature_help.signatures = { active_signature }
+        signature_help.activeSignature = 0
+        callback(signature_help)
+    end)
+end
+
 -- responsible for running completions
 return {
     "saghen/blink.cmp",
@@ -40,7 +59,9 @@ return {
             enabled = true,
             window = {
                 border = "rounded",
-                show_documentation = true,
+                -- Pyright documentation can repeat the signature label. Keep the
+                -- concise signature and avoid rendering the same details twice.
+                show_documentation = false,
             },
         },
 
@@ -58,6 +79,9 @@ return {
                     name = "LSP",
                     module = "blink.cmp.sources.lsp",
                     fallbacks = { "buffer" },
+                    override = {
+                        get_signature_help = use_active_signature,
+                    },
                 },
                 path = {
                     name = "Path",

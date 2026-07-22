@@ -40,7 +40,7 @@ rainbow > rainbow parentheses
 
 treesitter > syntax highlighting
 
-trouble > trouble shooting and diagnostics
+fzf-lua > diagnostics, quickfix, location lists, LSP symbols and code actions
 
 toggleterm > terminal
 

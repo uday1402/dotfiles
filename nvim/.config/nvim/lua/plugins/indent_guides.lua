@@ -35,7 +35,6 @@ return {
 						"alpha",
 						"dashboard",
 						"neo-tree",
-						"Trouble",
 						"lazy",
 						"mason",
 						"notify",

@@ -99,7 +99,7 @@ stashed = ""
 modified = " "
 staged = '[++\($count\)](fg:#E8F5E9 bg:#426342)'
 renamed = "襁"
-deleted = ""
+deleted = " "
 format = '[$all_status$ahead_behind](bold $style)'
 
 [golang]
