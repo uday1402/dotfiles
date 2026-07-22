@@ -52,21 +52,33 @@ map("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature help" })
 
 map("n", "<leader>xrn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 
-map("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+-- Match the diagnostics workflow from the previous Kickstart configuration:
+-- keep the buffer quiet while typing, show signs and warning/error underlines,
+-- and open a float automatically after using Neovim's diagnostic jumps.
+vim.diagnostic.config({
+	update_in_insert = false,
+	severity_sort = true,
+	underline = {
+		severity = {
+			min = vim.diagnostic.severity.WARN,
+		},
+	},
+	virtual_text = false,
+	float = {
+		border = "rounded",
+		source = "if_many",
+		style = "minimal",
+		focusable = true,
+	},
+	signs = true,
+	virtual_lines = false,
+	jump = {
+		float = true,
+	},
+})
 
-local function jump_diagnostic(count)
-	return function()
-		local diagnostic = vim.diagnostic.jump({ count = count })
-		if diagnostic then
-			vim.schedule(function()
-				vim.diagnostic.open_float({ scope = "cursor", focus = false })
-			end)
-		end
-	end
-end
-
-map("n", "]d", jump_diagnostic(1), { desc = "Next diagnostic" })
-map("n", "[d", jump_diagnostic(-1), { desc = "Previous diagnostic" })
+map("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+map("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open diagnostic location list" })
 
 -- Center screen after LSP jumps
 map("n", "gd", function()

@@ -30,7 +30,7 @@ return {
 				{ "<leader>d", group = "[D]ap Debugger", mode = { "n", "v" } },
 				{ "<leader>f", group = "[F]ind", mode = { "n", "v" } },
 				{ "<leader>s", group = "[S]plit", mode = { "n", "v" } },
-				{ "<leader>x", group = "Diagnostics / LSP", mode = { "n", "v" } },
+				{ "<leader>x", group = "LSP", mode = { "n", "v" } },
 				{ "gr", group = "LSP Actions", mode = { "n" } },
 			},
 		},

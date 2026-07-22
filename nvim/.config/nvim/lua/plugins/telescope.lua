@@ -2,7 +2,7 @@ return {
 	"nvim-telescope/telescope.nvim",
 
 	-- master works with nvim-treesitter main (0.1.x still calls removed ft_to_lang)
-		branch = "master",
+	branch = "master",
 
 	cmd = "Telescope",
 
@@ -51,7 +51,7 @@ return {
 		{
 			"<leader>fd",
 			"<cmd>Telescope diagnostics<cr>",
-			desc = "Diagnostics",
+			desc = "[F]ind [D]iagnostics",
 		},
 
 		{
