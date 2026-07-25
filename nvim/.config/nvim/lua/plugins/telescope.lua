@@ -69,11 +69,36 @@ return {
 
 	config = function()
 		local telescope = require("telescope")
+		local actions = require("telescope.actions")
 
 		telescope.setup({
 			defaults = {
 				path_display = {
 					"truncate",
+				},
+			},
+
+			pickers = {
+				find_files = {
+					mappings = {
+						n = {
+							["q"] = actions.close,
+						},
+					},
+				},
+				live_grep = {
+					mappings = {
+						n = {
+							["q"] = actions.close,
+						},
+					},
+				},
+				buffers = {
+					mappings = {
+						n = {
+							["q"] = actions.close,
+						},
+					},
 				},
 			},
 
