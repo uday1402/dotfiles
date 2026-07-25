@@ -13,6 +13,9 @@ opt.expandtab = true
 -- Tabline (always show; used by tabby.nvim + mouse tab clicks)
 opt.showtabline = 2
 
+-- Lualine already displays the current mode
+opt.showmode = false
+
 -- Indentations
 opt.smartindent = true
 vim.o.breakindent = true
