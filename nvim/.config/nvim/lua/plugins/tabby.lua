@@ -22,6 +22,10 @@ return {
 				},
 			})
 
+			-- Switch between tab pages
+			vim.keymap.set("n", "gt", "<cmd>tabnext<cr>", { desc = "Next tab" })
+			vim.keymap.set("n", "gT", "<cmd>tabprevious<cr>", { desc = "Previous tab" })
+
 			-- Open a new tab at the end
 			vim.keymap.set("n", "<leader>tn", "<cmd>$tabnew<cr>", { desc = "New tab" })
 			-- Close the current tab
