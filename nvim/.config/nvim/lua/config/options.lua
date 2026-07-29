@@ -32,14 +32,17 @@ vim.o.inccommand = "split"
 vim.o.cursorline = true
 
 -- cursor shape
-vim.o.guicursor = "n-v-i-c:block"
+vim.o.guicursor = "n-v-c:block-blinkon0,i:block-blinkwait700-blinkon250-blinkoff400"
+
+-- Keep the cursor constrained to actual text (disable virtual editing)
+opt.virtualedit = ""
 
 -- Enable mouse support
 opt.mouse = "a"
 
 -- Clipboard integration
 vim.schedule(function()
-    vim.o.clipboard = "unnamedplus"
+	vim.o.clipboard = "unnamedplus"
 end)
 
 -- Search behavior

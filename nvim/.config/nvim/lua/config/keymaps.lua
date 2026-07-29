@@ -48,8 +48,6 @@ map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 
 map("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
 
-map("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature help" })
-
 map("n", "<leader>xrn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 
 -- Match the diagnostics workflow from the previous Kickstart configuration:

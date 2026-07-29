@@ -55,3 +55,28 @@ gitsigns > git signs in the gutter
 context > context aware editing inside functions, classes etc
 
 colorscheme > lemon.lua
+
+# USAGE DOCUMENTATIONS
+---
+choose the documentation provider.
+  - [K / ]K — switch between documentation sources.
+  - <leader>fh — search Neovim help tags.
+
+  Inside Glance:
+
+  - j/k — move through results.
+  - <Tab> / <S-Tab> — change location.
+  - <CR> — jump to the selected result.
+  - v / s / t — open in vertical split, split, or tab.
+  - <C-u> / <C-d> — scroll the preview.
+  - q or <Esc> — close.
+
+  Best habit: use gd or gr first, inspect several results with <Tab>, then press <CR> only when you find the right context. Use K for quick
+  symbol documentation and gK when you want to inspect another available source.s.
+  - gy — preview type definitions.
+  - K — show contextual documentation with Hover.
+  - gK —Use this workflow:
+
+  - gd — preview definitions with Glance.
+  - gr — preview references.
+  - gi — preview implementation
