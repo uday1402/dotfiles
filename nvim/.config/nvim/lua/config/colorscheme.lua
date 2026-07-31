@@ -21,8 +21,10 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 	callback = function()
 		local colorscheme = vim.g.colors_name
 		if colorscheme and colorscheme ~= "" then
-			vim.fn.mkdir(vim.fn.fnamemodify(state_file, ":h"), "p")
-			vim.fn.writefile({ colorscheme }, state_file)
+			pcall(function()
+				vim.fn.mkdir(vim.fn.fnamemodify(state_file, ":h"), "p")
+				vim.fn.writefile({ colorscheme }, state_file)
+			end)
 		end
 	end,
 })

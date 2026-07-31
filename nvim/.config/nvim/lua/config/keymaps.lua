@@ -5,6 +5,28 @@ local opts = {
 	silent = true,
 }
 
+local function motion_and_center(keys)
+	local count = vim.v.count > 0 and tostring(vim.v.count) or ""
+	local winid = vim.api.nvim_get_current_win()
+
+	vim.cmd.normal({ args = { count .. keys }, bang = true })
+
+	local center = function()
+		if vim.api.nvim_win_is_valid(winid) then
+			vim.api.nvim_win_call(winid, function()
+				vim.cmd.normal({ args = { "zz" }, bang = true })
+			end)
+		end
+	end
+
+	local animate = rawget(_G, "MiniAnimate")
+	if animate then
+		animate.execute_after("scroll", center)
+	else
+		center()
+	end
+end
+
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>nohlsearch<cr>", opts)
 
@@ -30,11 +52,19 @@ vim.keymap.set({ "n", "v", "o", "x" }, "H", "^")
 -- Use the "D" key to delete to the end of the current line
 
 -- commands for autocentering the cursor after jumps
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+map("n", "<C-d>", function()
+	motion_and_center(vim.keycode("<C-d>"))
+end)
+map("n", "<C-u>", function()
+	motion_and_center(vim.keycode("<C-u>"))
+end)
 
-vim.keymap.set("n", "G", "Gzz")
-vim.keymap.set("n", "gg", "ggzz")
+map("n", "G", function()
+	motion_and_center("G")
+end)
+map("n", "gg", function()
+	motion_and_center("gg")
+end)
 
 -- Split horizontally and vertically using <leader> key
 map("n", "<leader>sh", ":split<CR>", { desc = "Split horizontally" })
@@ -42,8 +72,6 @@ map("n", "<leader>sv", ":vsplit<CR>", { desc = "Split vertically" })
 map("n", "<leader>sx", ":wq<CR>", { desc = "Close Pane" })
 
 -- LSP Actions keymap
-map("n", "gd", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-
 map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 
 map("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
@@ -71,7 +99,13 @@ vim.diagnostic.config({
 	signs = true,
 	virtual_lines = false,
 	jump = {
-		float = true,
+		on_jump = function(_, bufnr)
+			vim.diagnostic.open_float({
+				bufnr = bufnr,
+				scope = "cursor",
+				focus = false,
+			})
+		end,
 	},
 })
 

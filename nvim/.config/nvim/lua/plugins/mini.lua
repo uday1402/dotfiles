@@ -4,19 +4,25 @@ return {
 		version = false,
 
 		config = function()
+			local animate = require("mini.animate")
+
 			require("mini.ai").setup() -- aw, iw, q, b
 
 			require("mini.surround").setup() -- use :help mini.surround
 
 			require("mini.pairs").setup() -- autopairs
 
-			require("mini.animate").setup({
+			animate.setup({
 				cursor = {
 					enable = false,
 				},
 
 				scroll = {
 					enable = true,
+					timing = function(_, step_count)
+						return 200 / step_count
+					end,
+					subscroll = animate.gen_subscroll.equal({ max_output_steps = 8 }),
 				},
 
 				resize = {

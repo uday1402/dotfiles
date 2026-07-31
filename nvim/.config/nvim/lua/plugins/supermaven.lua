@@ -4,6 +4,15 @@ return {
 
 		event = "InsertEnter",
 
+		keys = {
+			{
+				"<leader>tm",
+				"<cmd>SupermavenToggle<cr>",
+				desc = "Toggle Super[M]aven",
+				silent = true,
+			},
+		},
+
 		config = function()
 			require("supermaven-nvim").setup({
 				keymaps = {
@@ -28,7 +37,5 @@ return {
 				disable_keymaps = false,
 			})
 		end,
-
-		vim.keymap.set("n", "<leader>tm", "<cmd>SupermavenToggle<cr>", { desc = "Toggle Super[M]aven", silent = true }),
 	},
 }

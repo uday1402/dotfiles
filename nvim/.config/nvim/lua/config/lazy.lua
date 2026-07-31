@@ -22,4 +22,9 @@ require("lazy").setup({
     checker = {
         enabled = true,
     },
+    -- None of the configured plugins need LuaRocks. Avoid probing and managing
+    -- an unused toolchain during plugin resolution.
+    rocks = {
+        enabled = false,
+    },
 })
