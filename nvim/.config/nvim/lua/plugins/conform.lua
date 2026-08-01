@@ -46,6 +46,12 @@ return {
 			-- You can use 'stop_after_first' to run the first available formatter from the list
 			-- javascript = { 'prettierd', 'prettier', stop_after_first = true },
 		},
+		-- clang-format defaults to two-space indentation. Keep four spaces for
+		-- C and C++ when formatting on save (and when formatting manually).
+		formatters = {
+			clang_format = {
+				prepend_args = { "--style={IndentWidth: 4}" },
+			},
+		},
 	},
 }
-
