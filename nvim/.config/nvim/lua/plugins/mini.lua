@@ -18,7 +18,7 @@ return {
 				},
 
 				scroll = {
-					enable = true,
+					enable = false,
 					timing = function(_, step_count)
 						return 200 / step_count
 					end,
