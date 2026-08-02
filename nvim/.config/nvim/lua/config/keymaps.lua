@@ -67,6 +67,10 @@ map("n", "gg", function()
 end)
 
 -- Split horizontally and vertically using <leader> key
+map("n", "<leader>w", vim.cmd.write, { desc = "Save file" })
+map("n", "<leader>wq", vim.cmd.wq, { desc = "Save and quit" })
+map("n", "<leader>q", vim.cmd.quit, { desc = "Quit" })
+
 map("n", "<leader>sh", ":split<CR>", { desc = "Split horizontally" })
 map("n", "<leader>sv", ":vsplit<CR>", { desc = "Split vertically" })
 map("n", "<leader>sx", ":wq<CR>", { desc = "Close Pane" })
