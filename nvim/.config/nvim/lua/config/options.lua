@@ -55,6 +55,9 @@ opt.splitbelow = true
 -- Keep cursor away from edges
 opt.scrolloff = 6
 
+-- Scroll six lines with <C-d> and <C-u>
+opt.scroll = 6
+
 -- Persistent undo
 opt.undofile = true
 

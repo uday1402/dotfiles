@@ -15,12 +15,13 @@ return {
 
             "python", "c", "cpp",
 
-            "bash", "markdown", "markdown_inline",
-            "json", "yaml", "toml",
+            "bash", "markdown", "markdown_inline", "regex", "query",
+            "json", "json5", "yaml", "toml",
 
-            "html", "css", "javascript", "typescript",
+            "html", "css", "scss", "javascript", "typescript", "tsx", "jsdoc",
 
-            "regex", "query",
+            "sql", "dockerfile",
+            "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore",
         })
 
         -- enable treesitter highlight + indent per filetype

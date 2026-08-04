@@ -88,6 +88,8 @@ return {
 
 			dap.configurations.c = native_configurations
 			dap.configurations.cpp = native_configurations
+
+			require("config.dap.javascript").setup()
 		end,
 	},
 

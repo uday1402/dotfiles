@@ -13,6 +13,8 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt SHARE_HISTORY
 setopt AUTO_CD
+# Show directories with a trailing slash in filename generation and completion.
+setopt MARK_DIRS
 setopt INTERACTIVE_COMMENTS
 
 # ----------------------------
@@ -38,9 +40,10 @@ export VISUAL=nvim
 # ----------------------------
 alias vim="nvim"
 alias vi="nvim"
+alias ls="ls -p"
 alias ll="ls -lah"
 alias la="ls -A"
-alias l="ls -CF"
+alias l="ls -C"
 alias notes='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/ApexOS/" && nvim'
 
 

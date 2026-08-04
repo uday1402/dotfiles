@@ -18,11 +18,11 @@ return {
 				},
 
 				scroll = {
-					enable = false,
+					enable = true,
 					timing = function(_, step_count)
-						return 200 / step_count
+						return 180 / step_count
 					end,
-					subscroll = animate.gen_subscroll.equal({ max_output_steps = 8 }),
+					subscroll = animate.gen_subscroll.equal({ max_output_steps = 12 }),
 				},
 
 				resize = {

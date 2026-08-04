@@ -27,7 +27,8 @@ return {
 			spec = {
 				{ "<leader>t", group = "[T]oggle" },
 				{ "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
-				{ "<leader>d", group = "[D]ap Debugger", mode = { "n", "v" } },
+				{ "<leader>d", group = "[D]ebug / Diagnostics", mode = { "n" } },
+				{ "<leader>b", group = "[B]atabase", mode = { "n" } },
 				{ "<leader>f", group = "[F]ind", mode = { "n", "v" } },
 				{ "<leader>s", group = "[S]plit", mode = { "n", "v" } },
 				{ "<leader>x", group = "LSP", mode = { "n", "v" } },

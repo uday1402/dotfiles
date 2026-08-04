@@ -73,6 +73,14 @@ return {
                 "buffer",
             },
 
+            -- Keep the normal LSP/path/snippet/buffer providers everywhere;
+            -- Dadbod is an additional source only for database buffers.
+            per_filetype = {
+                sql = { "dadbod", inherit_defaults = true },
+                mysql = { "dadbod", inherit_defaults = true },
+                plsql = { "dadbod", inherit_defaults = true },
+            },
+
             -- explicit provider wiring (connects LSP servers to blink)
             providers = {
                 lsp = {
@@ -97,6 +105,10 @@ return {
                 buffer = {
                     name = "Buffer",
                     module = "blink.cmp.sources.buffer",
+                },
+                dadbod = {
+                    name = "Dadbod",
+                    module = "vim_dadbod_completion.blink",
                 },
             },
         },

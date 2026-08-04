@@ -1,54 +1,96 @@
--- Autoformat
+-- Autoformat with project-local tools when available, falling back to Mason's
+-- PATH entries. LSP formatting remains the fallback for filetypes without a
+-- dedicated formatter (notably Dockerfiles).
+local prettier = { "prettierd", "prettier", stop_after_first = true }
+
+local format_on_save_filetypes = {
+	lua = true,
+	python = true,
+	json = true,
+	jsonc = true,
+	json5 = true,
+	c = true,
+	cpp = true,
+	toml = true,
+	html = true,
+	css = true,
+	scss = true,
+	less = true,
+	javascript = true,
+	javascriptreact = true,
+	typescript = true,
+	typescriptreact = true,
+	yaml = true,
+	["yaml.docker-compose"] = true,
+	["yaml.gitlab"] = true,
+	["yaml.helm-values"] = true,
+	markdown = true,
+	mdx = true,
+	sh = true,
+	bash = true,
+	zsh = true,
+	sql = true,
+	mysql = true,
+	plsql = true,
+	dockerfile = true,
+}
+
 return {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
 	cmd = { "ConformInfo" },
-	keys = {
-		-- {
-		--     '<leader>f',
-		--     function() require('conform').format { async = true } end,
-		--     mode = '',
-		--     desc = '[F]ormat buffer',
-		-- },
-	},
-	---@module 'conform'
-	---@type conform.setupOpts
 	opts = {
 		notify_on_error = false,
 		format_on_save = function(bufnr)
-			-- You can specify filetypes to autoformat on save here:
-			local enabled_filetypes = {
-				lua = true,
-				python = true,
-				json = true,
-				c = true,
-				cpp = true,
-				toml = true,
-			}
-			if enabled_filetypes[vim.bo[bufnr].filetype] then
-				return { timeout_ms = 500 }
-			else
+			if not format_on_save_filetypes[vim.bo[bufnr].filetype] then
 				return nil
 			end
+
+			local filename = vim.api.nvim_buf_get_name(bufnr)
+			if filename:find("/node_modules/", 1, true) then
+				return nil
+			end
+
+			return { timeout_ms = 1500 }
 		end,
 		default_format_opts = {
-			lsp_format = "fallback", -- Use external formatters if configured below, otherwise use LSP formatting. Set to `false` to disable LSP formatting entirely.
+			lsp_format = "fallback",
 		},
-		-- You can also specify external formatters in here.
 		formatters_by_ft = {
-			-- rust = { 'rustfmt' },
-			-- Conform can also run multiple formatters sequentially
+			lua = { "stylua" },
 			python = { "isort", "black" },
 			c = { "clang_format" },
 			cpp = { "clang_format" },
 			toml = { "taplo" },
-			-- added the following for c++ and c
-			-- You can use 'stop_after_first' to run the first available formatter from the list
-			-- javascript = { 'prettierd', 'prettier', stop_after_first = true },
+
+			html = prettier,
+			css = prettier,
+			scss = prettier,
+			less = prettier,
+			javascript = prettier,
+			javascriptreact = prettier,
+			typescript = prettier,
+			typescriptreact = prettier,
+			json = prettier,
+			jsonc = prettier,
+			json5 = prettier,
+			yaml = prettier,
+			["yaml.docker-compose"] = prettier,
+			["yaml.gitlab"] = prettier,
+			["yaml.helm-values"] = prettier,
+			markdown = prettier,
+			mdx = prettier,
+
+			sh = { "shfmt" },
+			bash = { "shfmt" },
+			zsh = { "shfmt" },
+			sql = { "sql_formatter" },
+			mysql = { "sql_formatter" },
+			plsql = { "sql_formatter" },
 		},
-		-- clang-format defaults to two-space indentation. Keep four spaces for
-		-- C and C++ when formatting on save (and when formatting manually).
 		formatters = {
+			-- clang-format defaults to two-space indentation. Keep four spaces for
+			-- C and C++ when formatting on save (and when formatting manually).
 			clang_format = {
 				prepend_args = { "--style={IndentWidth: 4}" },
 			},
