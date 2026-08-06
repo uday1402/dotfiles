@@ -8,6 +8,12 @@ return {
 				open_mapping = [[<c-\>]],
 				hide_numbers = true,
 				shade_filetypes = {},
+				shade_terminals = false,
+				highlights = {
+					Normal = { link = "Normal" },
+					NormalFloat = { link = "Normal" },
+					FloatBorder = { link = "Normal" },
+				},
 				start_in_insert = true,
 				insert_mappings = true,
 				persist_size = true,
