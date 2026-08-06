@@ -13,6 +13,8 @@ local function supermaven_status()
 	end
 end
 
+local daily_line_counter = require("config.daily_line_counter")
+
 return {
 	{
 		"nvim-lualine/lualine.nvim",
@@ -45,6 +47,7 @@ return {
 				},
 
 				lualine_x = {
+					daily_line_counter.status,
 					supermaven_status,
 					"encoding",
 					"fileformat",
