@@ -1,5 +1,5 @@
 # Created by newuser for 5.9
-#
+#the line below sources the openrouter api key which is stored inside a local file
 # ----------------------------
 # History
 # ----------------------------
@@ -46,6 +46,8 @@ alias la="ls -A"
 alias l="ls -C"
 alias notes='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/ApexOS/" && nvim'
 
+# TaskCLI project
+alias task='cd "/home/ud_1402/projects/TaskCLI" && uv run main.py'
 
 # ----------------------------
 # help (bash-like help for shell builtins)
@@ -57,24 +59,24 @@ alias notes='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/ApexOS/" &&
 # per-builtin help text from $HELPDIR (falling back to run-help/man).
 autoload -Uz run-help
 autoload -Uz run-help-btrfs run-help-git run-help-ip run-help-openssl \
-           run-help-p4 run-help-sudo run-help-svk run-help-svn
+    run-help-p4 run-help-sudo run-help-svk run-help-svn
 HELPDIR=${HELPDIR:-/usr/share/zsh/help}
 help() {
-  emulate -L zsh
-  if [[ $# -eq 0 ]]; then
-    print -- "Usage: help [pattern ...]"
-    print -- "Builtins with help text:"
-    print -rC1 $HELPDIR/*(:t)
-    return 0
-  fi
-  local t="$1"
-  [[ $t == "." ]] && t=dot
-  [[ $t == ":" ]] && t=colon
-  if [[ -r "$HELPDIR/$t" ]]; then
-    cat "$HELPDIR/$t"
-    return 0
-  fi
-  run-help "$@"
+    emulate -L zsh
+    if [[ $# -eq 0 ]]; then
+        print -- "Usage: help [pattern ...]"
+        print -- "Builtins with help text:"
+        print -rC1 $HELPDIR/*(:t)
+        return 0
+    fi
+    local t="$1"
+    [[ $t == "." ]] && t=dot
+    [[ $t == ":" ]] && t=colon
+    if [[ -r "$HELPDIR/$t" ]]; then
+        cat "$HELPDIR/$t"
+        return 0
+    fi
+    run-help "$@"
 }
 
 # ----------------------------
@@ -90,7 +92,7 @@ eval "$(starship init zsh)"
 source /usr/share/doc/fzf/examples/completion.zsh
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 
-# zsh plugins 
+# zsh plugins
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -100,28 +102,17 @@ select-word-style shell
 bindkey '^H' backward-kill-word
 
 # Ctrl+Arrow key bindings for word-by-word navigation
-bindkey '^[[1;5D' backward-word   # Ctrl+Left
-bindkey '^[[1;5C' forward-word    # Ctrl+Right
+bindkey '^[[1;5D' backward-word # Ctrl+Left
+bindkey '^[[1;5C' forward-word  # Ctrl+Right
 # Alternative key codes for different terminals
-bindkey '^[[5D' backward-word     # Ctrl+Left (alternative)
-bindkey '^[[5C' forward-word      # Ctrl+Right (alternative)
-bindkey '^[[1;3D' backward-word   # Alt+Left (some terminals)
-bindkey '^[[1;3C' forward-word    # Alt+Right (some terminals)
+bindkey '^[[5D' backward-word   # Ctrl+Left (alternative)
+bindkey '^[[5C' forward-word    # Ctrl+Right (alternative)
+bindkey '^[[1;3D' backward-word # Alt+Left (some terminals)
+bindkey '^[[1;3C' forward-word  # Alt+Right (some terminals)
 
 . "$HOME/.local/bin/env"
 
 # openrouter claude cli integration
 export PATH="$HOME/.npm-global/bin:$PATH"
-
-# Claude CLI settings from .bashrc
-export OPENROUTER_API_KEY="add_your_api_code_here"
-export ANTHROPIC_BASE_URL="https://openrouter.ai/api"
-export ANTHROPIC_AUTH_TOKEN="$OPENROUTER_API_KEY"
-export ANTHROPIC_API_KEY=""
-# models
-export CLAUDE_CODE_SUBAGENT_MODEL="cohere/north-mini-code:free"
-export ANTHROPIC_DEFAULT_OPUS_MODEL="nvidia/nemotron-3-ultra-550b-a55b:free"
-export ANTHROPIC_DEFAULT_SONNET_MODEL="openai/gpt-oss-120b:free"
-export ANTHROPIC_DEFAULT_HAIKU_MODEL="cohere/north-mini-code:free"
-export ANTHROPIC_CUSTOM_MODEL_OPTION="x-ai/grok-4.5"
-export ANTHROPIC_CUSTOM_MODEL_OPTION_NAME="grok-4.5"
+[[ -f "$HOME/.config/secrets/env.zsh" ]] &&
+    source "$HOME/.config/secrets/env.zsh"
