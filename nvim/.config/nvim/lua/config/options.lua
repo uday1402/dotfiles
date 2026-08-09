@@ -53,8 +53,8 @@ opt.smartcase = true
 opt.splitright = true
 opt.splitbelow = true
 
--- Keep cursor away from edges
-opt.scrolloff = 6
+-- Do not keep a cursor offset while scrolling
+opt.scrolloff = 0
 
 -- Scroll six lines with <C-d> and <C-u>
 opt.scroll = 6
