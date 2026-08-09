@@ -75,6 +75,23 @@ map("n", "<leader>sh", ":split<CR>", { desc = "Split horizontally" })
 map("n", "<leader>sv", ":vsplit<CR>", { desc = "Split vertically" })
 map("n", "<leader>sx", ":wq<CR>", { desc = "Close Pane" })
 
+local zoom_restore_by_tab = {}
+
+map("n", "<leader>sz", function()
+	local tabpage = vim.api.nvim_get_current_tabpage()
+	local restore = zoom_restore_by_tab[tabpage]
+
+	if restore then
+		vim.cmd(restore)
+		zoom_restore_by_tab[tabpage] = nil
+		return
+	end
+
+	zoom_restore_by_tab[tabpage] = vim.fn.winrestcmd()
+	vim.cmd("resize")
+	vim.cmd("vertical resize")
+end, { desc = "Toggle split zoom" })
+
 -- LSP Actions keymap
 map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 
