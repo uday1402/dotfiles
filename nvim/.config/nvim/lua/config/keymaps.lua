@@ -43,6 +43,13 @@ map("n", "k", "gk", opts)
 -- Exit Insert Mode using "jk"
 vim.keymap.set("i", "jk", "<Esc>", { silent = true, desc = "Exit insert mode", nowait = true })
 
+-- Execute one Normal-mode command, then return to Insert mode.
+vim.keymap.set("i", "<C-o>", "<C-o>", {
+	noremap = true,
+	silent = true,
+	desc = "Execute one Normal-mode command",
+})
+
 -- Exit Terminal mode with "jk"
 vim.keymap.set("t", "jk", [[<C-\><C-n>]], { silent = true, desc = "Exit terminal mode" })
 

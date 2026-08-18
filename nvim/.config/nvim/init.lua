@@ -5,7 +5,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-
 -- order of loading the modules matters!(DO NOT CHANGE)
 require("config.options")
 require("config.keymaps")
@@ -13,3 +12,6 @@ require("config.autocmds")
 require("config.colorscheme")
 
 require("config.lazy")
+
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
