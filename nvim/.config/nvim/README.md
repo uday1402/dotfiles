@@ -94,3 +94,23 @@ choose the documentation provider.
   - gd — preview definitions with Glance.
   - gr — preview references.
   - gi — preview implementation
+
+# Formatting & Diagnostics (Linters / Syntax Checkers)
+
+### Autoformatting (Conform)
+
+- `<leader>tf` — Toggle autoformat-on-save globally.
+- `<leader>tF` — Toggle autoformat-on-save for the current buffer only.
+- `<leader>xf` — Format current buffer or visual selection manually (Conform / LSP fallback).
+- `:FormatToggle` (`:FormatToggle!`) — Toggle autoformat-on-save (global / buffer).
+- `:FormatDisable` (`:FormatDisable!`) — Disable autoformat-on-save (global / buffer).
+- `:FormatEnable` — Re-enable autoformat-on-save.
+
+### Linters & Syntax Checkers (Diagnostics)
+
+- `<leader>td` or `<leader>dt` — Toggle linters and syntax checks globally.
+- `<leader>tD` — Toggle linters and syntax checks for the current buffer only.
+- `:DiagnosticToggle` (`:DiagnosticToggle!`) — Toggle linters and diagnostics (global / buffer).
+- `:DiagnosticDisable` (`:DiagnosticDisable!`) — Turn off linters and diagnostics (global / buffer).
+- `:DiagnosticEnable` (`:DiagnosticEnable!`) — Turn on linters and diagnostics (global / buffer).
+

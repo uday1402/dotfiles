@@ -149,3 +149,129 @@ map("n", "gr", function()
 	vim.lsp.buf.references()
 	vim.cmd("normal! zz")
 end, { desc = "Find references (centered)" })
+
+-- ============================================================================
+-- Autoformatting Toggles & Commands (Conform)
+-- ============================================================================
+local function toggle_autoformat(bufnr)
+	if bufnr then
+		local current = vim.b[bufnr].disable_autoformat
+		vim.b[bufnr].disable_autoformat = not current
+		local state = vim.b[bufnr].disable_autoformat and "disabled" or "enabled"
+		vim.notify("Buffer autoformat " .. state, vim.log.levels.INFO, { title = "Formatting" })
+	else
+		vim.g.disable_autoformat = not vim.g.disable_autoformat
+		local state = vim.g.disable_autoformat and "disabled" or "enabled"
+		vim.notify("Global autoformat " .. state, vim.log.levels.INFO, { title = "Formatting" })
+	end
+end
+
+vim.api.nvim_create_user_command("FormatToggle", function(args)
+	toggle_autoformat(args.bang and vim.api.nvim_get_current_buf() or nil)
+end, {
+	desc = "Toggle autoformat-on-save (use ! for buffer only)",
+	bang = true,
+})
+
+vim.api.nvim_create_user_command("FormatDisable", function(args)
+	if args.bang then
+		vim.b.disable_autoformat = true
+	else
+		vim.g.disable_autoformat = true
+	end
+	vim.notify("Autoformat disabled" .. (args.bang and " (buffer)" or " (global)"), vim.log.levels.WARN, { title = "Formatting" })
+end, {
+	desc = "Disable autoformat-on-save",
+	bang = true,
+})
+
+vim.api.nvim_create_user_command("FormatEnable", function(args)
+	if args.bang then
+		vim.b.disable_autoformat = false
+	else
+		vim.b.disable_autoformat = false
+		vim.g.disable_autoformat = false
+	end
+	vim.notify("Autoformat enabled" .. (args.bang and " (buffer)" or " (global)"), vim.log.levels.INFO, { title = "Formatting" })
+end, {
+	desc = "Re-enable autoformat-on-save",
+	bang = true,
+})
+
+map("n", "<leader>tf", function()
+	toggle_autoformat()
+end, { desc = "Toggle autoformat-on-save" })
+
+map("n", "<leader>tF", function()
+	toggle_autoformat(vim.api.nvim_get_current_buf())
+end, { desc = "Toggle buffer autoformat-on-save" })
+
+-- Manual format buffer (fallback to LSP if Conform isn't loaded)
+map({ "n", "v" }, "<leader>xf", function()
+	local ok, conform = pcall(require, "conform")
+	if ok then
+		conform.format({ async = true, lsp_format = "fallback" })
+	else
+		vim.lsp.buf.format({ async = true })
+	end
+end, { desc = "Format buffer / selection" })
+
+-- ============================================================================
+-- Linters & Syntax Checkers Toggles & Commands (Diagnostics)
+-- ============================================================================
+local function toggle_diagnostics(bufnr)
+	if bufnr then
+		local enabled = vim.diagnostic.is_enabled({ bufnr = bufnr })
+		vim.diagnostic.enable(not enabled, { bufnr = bufnr })
+		local state = not enabled and "enabled" or "disabled"
+		vim.notify("Buffer linters & diagnostics " .. state, vim.log.levels.INFO, { title = "Diagnostics" })
+	else
+		local enabled = vim.diagnostic.is_enabled()
+		vim.diagnostic.enable(not enabled)
+		local state = not enabled and "enabled" or "disabled"
+		vim.notify("Global linters & diagnostics " .. state, vim.log.levels.INFO, { title = "Diagnostics" })
+	end
+end
+
+vim.api.nvim_create_user_command("DiagnosticToggle", function(args)
+	toggle_diagnostics(args.bang and vim.api.nvim_get_current_buf() or nil)
+end, {
+	desc = "Toggle linters/diagnostics (use ! for buffer only)",
+	bang = true,
+})
+
+vim.api.nvim_create_user_command("DiagnosticDisable", function(args)
+	if args.bang then
+		vim.diagnostic.enable(false, { bufnr = 0 })
+	else
+		vim.diagnostic.enable(false)
+	end
+	vim.notify("Linters & diagnostics turned off" .. (args.bang and " (buffer)" or " (global)"), vim.log.levels.WARN, { title = "Diagnostics" })
+end, {
+	desc = "Turn off linters and syntax checkers",
+	bang = true,
+})
+
+vim.api.nvim_create_user_command("DiagnosticEnable", function(args)
+	if args.bang then
+		vim.diagnostic.enable(true, { bufnr = 0 })
+	else
+		vim.diagnostic.enable(true)
+	end
+	vim.notify("Linters & diagnostics turned on" .. (args.bang and " (buffer)" or " (global)"), vim.log.levels.INFO, { title = "Diagnostics" })
+end, {
+	desc = "Turn on linters and syntax checkers",
+	bang = true,
+})
+
+map("n", "<leader>td", function()
+	toggle_diagnostics()
+end, { desc = "Toggle linters & diagnostics" })
+
+map("n", "<leader>tD", function()
+	toggle_diagnostics(vim.api.nvim_get_current_buf())
+end, { desc = "Toggle buffer linters & diagnostics" })
+
+map("n", "<leader>dt", function()
+	toggle_diagnostics()
+end, { desc = "Toggle linters & diagnostics" })

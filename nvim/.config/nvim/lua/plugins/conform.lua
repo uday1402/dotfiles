@@ -24,8 +24,8 @@ local format_on_save_filetypes = {
 	["yaml.docker-compose"] = true,
 	["yaml.gitlab"] = true,
 	["yaml.helm-values"] = true,
-	markdown = true,
-	mdx = true,
+	-- markdown = true,
+	-- mdx = true,
 	sh = true,
 	bash = true,
 	zsh = true,
@@ -42,6 +42,10 @@ return {
 	opts = {
 		notify_on_error = false,
 		format_on_save = function(bufnr)
+			if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+				return nil
+			end
+
 			if not format_on_save_filetypes[vim.bo[bufnr].filetype] then
 				return nil
 			end

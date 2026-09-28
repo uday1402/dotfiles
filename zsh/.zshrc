@@ -32,14 +32,12 @@ setopt PUSHD_IGNORE_DUPS
 # ----------------------------
 # Editor
 # ----------------------------
-export EDITOR=nvim
-export VISUAL=nvim
+# export EDITOR=nvim
+# export VISUAL=nvim
 
 # ----------------------------
 # Aliases
 # ----------------------------
-alias vim="nvim"
-alias vi="nvim"
 alias ls="ls -p"
 alias ll="ls -lah"
 alias la="ls -A"
