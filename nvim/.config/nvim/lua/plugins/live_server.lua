@@ -1,5 +1,5 @@
 return {
-	"barrett-ruth/live-server.nvim",
+	"https://forge.barrettruth.com/barrettruth/live-server.nvim",
 	cmd = { "LiveServerStart", "LiveServerStop", "LiveServerToggle" },
 	keys = {
 		{ "<leader>tl", "<cmd>LiveServerToggle<cr>", desc = "Toggle live server" },
