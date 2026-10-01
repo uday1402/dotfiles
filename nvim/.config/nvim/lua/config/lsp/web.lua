@@ -143,8 +143,34 @@ return {
 	-- Keep explicit keys for all web/data servers so this table is the single
 	-- place to discover their local overrides. Empty entries retain upstream
 	-- nvim-lspconfig behavior.
-	html = {},
-	cssls = {},
+	html = {
+		settings = {
+			html = {
+				format = {
+					tabSize = 4,
+				},
+			},
+		},
+	},
+	cssls = {
+		settings = {
+			css = {
+				format = {
+					tabSize = 4,
+				},
+			},
+			less = {
+				format = {
+					tabSize = 4,
+				},
+			},
+			scss = {
+				format = {
+					tabSize = 4,
+				},
+			},
+		},
+	},
 	ts_ls = {},
 	eslint = {},
 	jsonls = {

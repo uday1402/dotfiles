@@ -10,6 +10,9 @@ opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.expandtab = true
 
+-- Prettier default configuration
+vim.env.PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc.json"
+
 -- Tabline (always show; used by tabby.nvim + mouse tab clicks)
 opt.showtabline = 2
 

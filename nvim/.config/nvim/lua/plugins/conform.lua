@@ -98,6 +98,14 @@ return {
 			clang_format = {
 				prepend_args = { "--style={IndentWidth: 4}" },
 			},
+			prettier = {
+				prepend_args = { "--tab-width", "4", "--config-precedence", "prefer-file" },
+			},
+			prettierd = {
+				env = {
+					PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc.json",
+				},
+			},
 		},
 	},
 }
