@@ -156,6 +156,9 @@ end, { desc = "Find references (centered)" })
 local function toggle_autoformat(bufnr)
 	if bufnr then
 		local current = vim.b[bufnr].disable_autoformat
+		if current == nil then
+			current = vim.g.disable_autoformat
+		end
 		vim.b[bufnr].disable_autoformat = not current
 		local state = vim.b[bufnr].disable_autoformat and "disabled" or "enabled"
 		vim.notify("Buffer autoformat " .. state, vim.log.levels.INFO, { title = "Formatting" })

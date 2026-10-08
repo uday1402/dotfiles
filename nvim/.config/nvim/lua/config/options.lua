@@ -13,6 +13,9 @@ opt.expandtab = true
 -- Prettier default configuration
 vim.env.PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc.json"
 
+-- Disable autoformat-on-save by default
+vim.g.disable_autoformat = true
+
 -- Tabline (always show; used by tabby.nvim + mouse tab clicks)
 opt.showtabline = 2
 
