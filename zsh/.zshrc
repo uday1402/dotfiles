@@ -114,3 +114,5 @@ bindkey '^[[1;3C' forward-word  # Alt+Right (some terminals)
 export PATH="$HOME/.npm-global/bin:$PATH"
 [[ -f "$HOME/.config/secrets/env.zsh" ]] &&
     source "$HOME/.config/secrets/env.zsh"
+
+eval "$(zoxide init zsh)"
