@@ -108,6 +108,12 @@ return {
 		priority = 1000,
 	},
 
+	{
+		"Everblush/everblush.vim",
+		lazy = false,
+		priority = 1000,
+	},
+
 	-- Colorscheme selector
 	{
 		"nvim-telescope/telescope.nvim",
