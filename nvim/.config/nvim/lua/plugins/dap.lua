@@ -1,24 +1,26 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
-		dependencies = { "mfussenegger/nvim-dap-python" },
+		dependencies = { 
+            "mfussenegger/nvim-dap-python",
+            "rcarriga/nvim-dap-ui",
+            "theHamsta/nvim-dap-virtual-text"
+        },
+		keys = {
+			{ "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "DAP: Toggle Breakpoint" },
+			{ "<leader>dc", function() require("dap").continue() end, desc = "DAP: Continue" },
+			{ "<leader>dn", function() require("dap").step_over() end, desc = "DAP: Step Over" },
+			{ "<leader>di", function() require("dap").step_into() end, desc = "DAP: Step Into" },
+			{ "<leader>do", function() require("dap").step_out() end, desc = "DAP: Step Out" },
+			{ "<leader>dt", function() require("dap").terminate() end, desc = "DAP: Terminate" },
+			{ "<leader>dr", function() require("dap").repl.toggle() end, desc = "DAP: REPL" },
+			{ "<leader>du", function() require("dapui").toggle({}) end, desc = "DAP: UI" },
+		},
 		config = function()
 			local dap = require("dap")
 			local dap_python = require("dap-python")
 			local dap_utils = require("dap.utils")
 			local map = vim.keymap.set
-
-			-- Keymaps
-			map("n", "<leader>db", dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
-			map("n", "<leader>dc", dap.continue, { desc = "DAP: Continue" })
-			map("n", "<leader>dn", dap.step_over, { desc = "DAP: Step Over" })
-			map("n", "<leader>di", dap.step_into, { desc = "DAP: Step Into" })
-			map("n", "<leader>do", dap.step_out, { desc = "DAP: Step Out" })
-			map("n", "<leader>dt", dap.terminate, { desc = "DAP: Terminate" })
-			map("n", "<leader>dr", dap.repl.toggle, { desc = "DAP: REPL" })
-			map("n", "<leader>du", function()
-				require("dapui").toggle({})
-			end, { desc = "DAP: UI" })
 
 			-- Python / Debugpy. Prefer the uv tool installation without tying the
 			-- configuration to a username, and retain dap-python's full config set.
@@ -95,6 +97,7 @@ return {
 
 	{
 		"rcarriga/nvim-dap-ui",
+		lazy = true,
 		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
 		config = function()
 			local dap = require("dap")
@@ -117,6 +120,7 @@ return {
 
 	{
 		"theHamsta/nvim-dap-virtual-text",
+		lazy = true,
 		dependencies = { "mfussenegger/nvim-dap", "nvim-treesitter/nvim-treesitter" },
 		opts = {
 			commented = true,

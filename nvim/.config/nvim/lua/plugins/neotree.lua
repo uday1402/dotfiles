@@ -12,7 +12,11 @@ return {
       'MunifTanjim/nui.nvim',
     },
 
-    lazy = false,
+    cmd = "Neotree",
+    keys = {
+      { "<leader>e", "<cmd>Neotree toggle<CR>", desc = "Toggle file explorer" },
+      { "<leader>o", "<cmd>Neotree focus reveal<CR>", desc = "Reveal current file in explorer" },
+    },
 
     config = function()
       require('neo-tree').setup {
@@ -55,17 +59,6 @@ return {
           },
         },
       }
-
-      -- Toggle Neo-tree:
-      vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', {
-        desc = 'Toggle file explorer',
-        silent = true,
-      })
-      -- reveal current file in neotree:
-      vim.keymap.set('n', '<leader>o', ':Neotree focus reveal<CR>', {
-        desc = 'Reveal current file in explorer',
-        silent = true,
-      })
 
     end,
   },

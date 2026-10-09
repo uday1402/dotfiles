@@ -1,6 +1,7 @@
 -- useful for command line completions
 return {
 	"gelguy/wilder.nvim",
+	event = "CmdlineEnter",
 
 	dependencies = {
 		"romgrk/fzy-lua-native",

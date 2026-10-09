@@ -44,7 +44,7 @@ opt.virtualedit = ""
 
 -- Enable mouse support
 opt.mouse = "a"
-opt.mousescroll = { "ver:8", "hor:6" }
+opt.mousescroll = { "ver:1", "hor:1" }
 
 -- Clipboard integration
 vim.schedule(function()

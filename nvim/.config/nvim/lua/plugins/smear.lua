@@ -41,6 +41,7 @@ return {
 
 		config = function(_, opts)
 			require("smear_cursor").setup(opts)
+			require("smear_cursor").enabled = false
 
 			-- Optional Toggle Keymap
 			vim.keymap.set("n", "<leader>ts", ":SmearCursorToggle<CR>", {

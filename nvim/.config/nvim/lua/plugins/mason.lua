@@ -64,6 +64,7 @@ return {
 	},
 	{
 		"mason-org/mason-lspconfig.nvim",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"mason-org/mason.nvim",
 			"neovim/nvim-lspconfig",
@@ -114,6 +115,7 @@ return {
 	},
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		event = "VeryLazy",
 		dependencies = {
 			"mason-org/mason.nvim",
 			"mason-org/mason-lspconfig.nvim",
@@ -133,6 +135,7 @@ return {
 	},
 	{
 		"jay-babu/mason-nvim-dap.nvim",
+		lazy = true,
 		dependencies = {
 			"mason-org/mason.nvim",
 			"mfussenegger/nvim-dap",
