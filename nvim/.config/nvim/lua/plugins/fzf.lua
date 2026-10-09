@@ -7,23 +7,28 @@ return {
             "<leader>xs",
             "<cmd>FzfLua lsp_document_symbols<cr>",
             desc = "Document symbols",
+            -- show symbols(functions, classes, variables, methods etc)  in the current file; Useful for jumping around a file quickly.
         },
         {
             "<leader>xl",
             "<cmd>FzfLua lsp_finder<cr>",
             desc = "LSP definitions and references",
+            -- shows LSP locations related to the symbol under the cursor. Includes definitions, references, implementations, and declarations; let's you search where something is used or defined.
         },
         {
             "<leader>xca",
             "<cmd>FzfLua lsp_code_actions<cr>",
             mode = { "n", "x" },
             desc = "Code actions",
+            silent = true,
+            -- shows available code actions from the language server; Import fixes, quick refactors, rename suggestions, apply fix-its. Can be used over a region in visual mode.
         },
         {
             "gra",
             "<cmd>FzfLua lsp_code_actions<cr>",
             mode = { "n", "x" },
             desc = "Code actions",
+            -- same as above, which helps in finding code actions(more vim style keymap)
         },
     },
     opts = {
