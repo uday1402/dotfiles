@@ -70,34 +70,67 @@ return {
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
+		local action_layout = require("telescope.actions.layout")
 
 		telescope.setup({
 			defaults = {
+				layout_strategy = "horizontal",
+
+				layout_config = {
+					horizontal = { preview_width = 0.65 },
+					vertical = { preview_height = 0.5 },
+					width = 0.95,
+					height = 0.95,
+				},
+
+				-- Cycle through these preset layouts with <C-l>:
+				--   1. Default   – side-by-side, 87×80 %, 55 % preview
+				--   2. Maximized – nearly full screen, 65 % preview
+				--   3. Vertical  – stacked, top results / bottom preview
+				cycle_layout_list = {
+					{
+						layout_strategy = "horizontal",
+						layout_config = {
+							width = 0.87,
+							height = 0.80,
+							preview_width = 0.55,
+						},
+					},
+					{
+						layout_strategy = "horizontal",
+						layout_config = {
+							width = 0.95,
+							height = 0.95,
+							preview_width = 0.65,
+						},
+					},
+					{
+						layout_strategy = "vertical",
+						layout_config = {
+							width = 0.80,
+							height = 0.90,
+							preview_height = 0.55,
+						},
+					},
+				},
+
 				path_display = {
 					"truncate",
 				},
-			},
 
-			pickers = {
-				find_files = {
-					mappings = {
-						n = {
-							["q"] = actions.close,
-						},
+				-- Mappings applied to EVERY picker (find_files, live_grep,
+				-- devdocs, etc.) so they all behave consistently.
+				mappings = {
+					i = {
+						["<C-p>"] = action_layout.toggle_preview,
+						["<C-l>"] = action_layout.cycle_layout_next,
+						["<C-j>"] = actions.move_selection_next,
+						["<C-k>"] = actions.move_selection_previous,
 					},
-				},
-				live_grep = {
-					mappings = {
-						n = {
-							["q"] = actions.close,
-						},
-					},
-				},
-				buffers = {
-					mappings = {
-						n = {
-							["q"] = actions.close,
-						},
+					n = {
+						["q"] = actions.close,
+						["<C-p>"] = action_layout.toggle_preview,
+						["<C-l>"] = action_layout.cycle_layout_next,
 					},
 				},
 			},

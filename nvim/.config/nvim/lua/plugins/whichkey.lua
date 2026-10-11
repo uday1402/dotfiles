@@ -34,6 +34,7 @@ return {
 				{ "<leader>x", group = "LSP", mode = { "n", "v" } },
 				{ "<leader>i", group = "[A]I Assistant", mode = { "n", "v" } },
 				{ "gr", group = "LSP Actions", mode = { "n" } },
+				{ "<leader>D", group = "[D]evDocs", mode = { "n" } },
 			},
 		},
 	},
