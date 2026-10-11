@@ -116,3 +116,6 @@ export PATH="$HOME/.npm-global/bin:$PATH"
     source "$HOME/.config/secrets/env.zsh"
 
 eval "$(zoxide init zsh)"
+
+# Hermes Agent command
+case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac
