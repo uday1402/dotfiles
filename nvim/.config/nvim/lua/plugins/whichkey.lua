@@ -35,6 +35,7 @@ return {
 				{ "<leader>i", group = "[A]I Assistant", mode = { "n", "v" } },
 				{ "gr", group = "LSP Actions", mode = { "n" } },
 				{ "<leader>D", group = "[D]evDocs", mode = { "n" } },
+				{ "<leader>m", group = "[M]arkdown", mode = { "n" } },
 			},
 		},
 	},

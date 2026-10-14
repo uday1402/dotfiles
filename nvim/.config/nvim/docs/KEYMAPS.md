@@ -52,3 +52,18 @@ Telescope picker (find files, live grep, DevDocs, diagnostics, etc.).
 | 1 | Horizontal | 87 × 80 % | 55 % width (compact) |
 | 2 | Horizontal | 95 × 95 % | 65 % width (maximized — **default**) |
 | 3 | Vertical | 80 × 90 % | 55 % height (stacked) |
+
+---
+
+## Markdown Renderer (`<leader>m` prefix)
+
+Defined in [`render_markdown.lua`](lua/plugins/render_markdown.lua). Registered as the
+**[M]arkdown** group in [`whichkey.lua`](lua/plugins/whichkey.lua).
+
+| Key | Mode | Command | Description |
+| --- | --- | --- | --- |
+| `<leader>mr` | n | `:RenderMarkdown toggle` | Toggle markdown rendering on / off |
+| `<leader>me` | n | `:RenderMarkdown expand` | Expand all collapsible sections |
+| `<leader>mc` | n | `:RenderMarkdown contract` | Contract all collapsible sections |
+| `<leader>ml` | n | `:RenderMarkdown log` | Open the render-markdown debug log |
+
