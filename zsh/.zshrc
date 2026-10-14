@@ -43,9 +43,7 @@ alias ll="ls -lah"
 alias la="ls -A"
 alias l="ls -C"
 alias notes='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/ApexOS/" && nvim'
-
-# TaskCLI project
-alias task='cd "/home/ud_1402/projects/TaskCLI" && uv run main.py'
+alias alpha="cd /mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/AlphaOS/"
 
 # ----------------------------
 # help (bash-like help for shell builtins)
