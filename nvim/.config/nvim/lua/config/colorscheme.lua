@@ -15,6 +15,8 @@ local function apply_everblush_black()
 	local red = "#e57474"
 	local magenta = "#c47fd5"
 	local cyan = "#6cd0ca"
+	local navy_highlight = "#252a45"
+	local navy_select = "#30375c"
 
 	-- Replace any default #141b1e background with transparent across all highlights
 	for name, _ in pairs(vim.api.nvim_get_hl(0, {})) do
@@ -40,8 +42,8 @@ local function apply_everblush_black()
 		SignColumn = { fg = light_gray, bg = "NONE" },
 		LineNr = { fg = muted, bg = "NONE" },
 		CursorLineNr = { fg = yellow, bg = "NONE", bold = true },
-		CursorLine = { bg = dark_gray },
-		CursorColumn = { bg = dark_gray },
+		CursorLine = { bg = navy_highlight },
+		CursorColumn = { bg = navy_highlight },
 		ColorColumn = { bg = dark_gray },
 		EndOfBuffer = { fg = black, bg = "NONE" },
 		Folded = { fg = blue, bg = dark_gray },
@@ -57,8 +59,8 @@ local function apply_everblush_black()
 		TabLineSel = { fg = text, bg = "NONE", bold = true },
 		TabLineFill = { bg = "NONE" },
 		TabLine = { fg = muted, bg = "NONE" },
-		Visual = { bg = gray, bold = true },
-		VisualNOS = { bg = gray },
+		Visual = { bg = navy_select, bold = true },
+		VisualNOS = { bg = navy_select },
 
 		-- Popups & Menus
 		Pmenu = { fg = text, bg = "NONE" },
@@ -91,7 +93,7 @@ local function apply_everblush_black()
 		TelescopePreviewNormal = { fg = text, bg = "NONE" },
 		TelescopePreviewBorder = { fg = gray, bg = "NONE" },
 		TelescopePreviewTitle = { fg = black, bg = yellow, bold = true },
-		TelescopeSelection = { fg = text, bg = dark_gray, bold = true },
+		TelescopeSelection = { fg = text, bg = navy_select, bold = true },
 
 		-- Neo-tree
 		NeoTreeNormal = { fg = text, bg = "NONE" },
@@ -101,7 +103,7 @@ local function apply_everblush_black()
 		NeoTreeFloatNormal = { fg = text, bg = "NONE" },
 		NeoTreeFloatBorder = { fg = light_gray, bg = "NONE" },
 		NeoTreeFloatTitle = { fg = blue, bg = "NONE", bold = true },
-		NeoTreeCursorLine = { bg = dark_gray },
+		NeoTreeCursorLine = { bg = navy_highlight },
 
 		-- Blink CMP
 		BlinkCmpMenu = { fg = text, bg = "NONE" },
@@ -128,7 +130,7 @@ local function apply_everblush_black()
 		GlanceListNormal = { fg = text, bg = "NONE" },
 		GlanceListBorderBottom = { fg = gray, bg = "NONE" },
 		GlanceListEndOfBuffer = { fg = "NONE", bg = "NONE" },
-		GlanceListCursorLine = { bg = dark_gray },
+		GlanceListCursorLine = { bg = navy_highlight },
 		GlancePreviewNormal = { fg = text, bg = "NONE" },
 		GlancePreviewBorderBottom = { fg = gray, bg = "NONE" },
 		GlancePreviewEndOfBuffer = { fg = "NONE", bg = "NONE" },
@@ -224,6 +226,8 @@ local function make_transparent()
 		hl.bg = nil
 		vim.api.nvim_set_hl(0, group, hl)
 	end
+	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#252a45" })
+	vim.api.nvim_set_hl(0, "CursorColumn", { bg = "#252a45" })
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", {
