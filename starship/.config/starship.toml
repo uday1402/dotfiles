@@ -1,39 +1,44 @@
-# Classic Bash-style Starship Configuration
-format = """$python$username$hostname:$directory$git_branch$git_status$character"""
+# Minimal Ghostty-style Starship Configuration
+# Single-line, minimal prompt with directory, git branch, and > indicator
+format = """$directory$git_branch$git_status$python$character"""
 
 # Disable blank line at start of prompt
 add_newline = false
 
+# Hide username and hostname for a clean, minimal prompt
 [username]
-show_always = true
-style_user = "bold green"
-style_root = "bold red"
-format = "[$user]($style)"
-disabled = false
+disabled = true
 
 [hostname]
-ssh_only = false
-style = "bold green"
-format = "[@$hostname]($style)"
-disabled = false
+disabled = true
 
+# Working directory styled in Ghostty slate blue (#81A2BE)
 [directory]
-style = "bold blue"
-format = "[$path]($style)"
-truncation_length = 0
+style = "bold #0388fc"
+format = "[$path]($style) "
+truncation_length = 3
 truncate_to_repo = false
 
+# Minimal command prompt symbol: green > on success, red > on error
 [character]
-success_symbol = "[\\$](bold green) "
-error_symbol = "[\\$](bold red) "
+# success_symbol = "[>](bold #b5bd68) "
+# error_symbol = "[>](bold #cc6666) "
+# Tip: If you prefer the modern chevron, uncomment below:
+success_symbol = "[❯](bold #b5bd68) "
+error_symbol = "[❯](bold #cc6666) "
 
+# Git branch styled in Ghostty mauve/purple (#B294BB)
 [git_branch]
-style = "bold cyan"
-format = ' [(\($branch\))]($style)'
+style = "bold #b294bb"
+# format = '[(\($branch\))]($style) '
+# Tip: If you prefer Nerd Font git icon ' main', uncomment below:
+symbol = " "
+format = '[$symbol$branch]($style) '
 
+# Git status indicators styled in Ghostty amber (#F0C674)
 [git_status]
-style = "bold yellow"
-format = '([$all_status$ahead_behind]($style))'
+style = "bold #e0544a"
+format = '([$all_status$ahead_behind]($style) )'
 conflicted = "="
 ahead = "⇡${count}"
 behind = "⇣${count}"
@@ -44,6 +49,7 @@ staged = "+"
 renamed = "»"
 deleted = "✘"
 
+# Python virtual environment indicator (only visible when a venv is activated)
 [python]
-style = "bold yellow"
-format = '[(\($virtualenv\) )]($style)'
+style = "bold #8abeb7"
+format = '[(\($virtualenv\))]($style) '
