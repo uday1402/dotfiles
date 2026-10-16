@@ -35,6 +35,7 @@ return {
         winopts = {
             height = 0.85,
             width = 0.90,
+            backdrop = false,
             preview = {
                 layout = "horizontal",
                 horizontal = "right:55%",

@@ -36,7 +36,6 @@ return {
 
 			-- Subtle Black Theme Style
 			cursor_color = "#f5e0dc",
-			normal_bg = "#000000",
 		},
 
 		config = function(_, opts)

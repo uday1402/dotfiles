@@ -16,11 +16,11 @@ local function apply_everblush_black()
 	local magenta = "#c47fd5"
 	local cyan = "#6cd0ca"
 
-	-- Replace any default #141b1e background with pure black across all highlights
+	-- Replace any default #141b1e background with transparent across all highlights
 	for name, _ in pairs(vim.api.nvim_get_hl(0, {})) do
 		local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
 		if hl.bg and string.format("#%06x", hl.bg) == "#141b1e" then
-			hl.bg = black
+			hl.bg = nil
 			vim.api.nvim_set_hl(0, name, hl)
 		end
 	end
@@ -28,11 +28,15 @@ local function apply_everblush_black()
 	-- Explicitly style core and plugin elements to black (#000000), matching Lemons
 	local highlights = {
 		-- Core Editor
-		Normal = { fg = text, bg = black },
-		NormalNC = { fg = text, bg = black },
-		NormalFloat = { fg = text, bg = black },
-		FloatBorder = { fg = light_gray, bg = black },
-		FloatTitle = { fg = blue, bg = black, bold = true },
+		Normal = { fg = text, bg = "NONE" },
+		NormalNC = { fg = text, bg = "NONE" },
+		NormalFloat = { fg = text, bg = "NONE" },
+		FloatBorder = { fg = light_gray, bg = "NONE" },
+		FloatTitle = { fg = blue, bg = "NONE", bold = true },
+		FloatShadow = { bg = "NONE" },
+		FloatShadowThrough = { bg = "NONE" },
+		WinBar = { fg = text, bg = "NONE" },
+		WinBarNC = { fg = muted, bg = "NONE" },
 		SignColumn = { fg = light_gray, bg = "NONE" },
 		LineNr = { fg = muted, bg = "NONE" },
 		CursorLineNr = { fg = yellow, bg = "NONE", bold = true },
@@ -44,20 +48,20 @@ local function apply_everblush_black()
 		FoldColumn = { fg = muted, bg = "NONE" },
 		Conceal = { fg = blue, bg = "NONE" },
 		NonText = { fg = light_gray, bg = "NONE" },
-		MsgArea = { fg = text, bg = black },
-		MsgSeparator = { fg = text, bg = black },
+		MsgArea = { fg = text, bg = "NONE" },
+		MsgSeparator = { fg = text, bg = "NONE" },
 		WinSeparator = { fg = gray, bg = "NONE" },
 		VertSplit = { fg = gray, bg = "NONE" },
-		StatusLine = { fg = text, bg = gray },
-		StatusLineNC = { fg = muted, bg = dark_gray },
-		TabLineSel = { fg = text, bg = black, bold = true },
-		TabLineFill = { bg = gray },
-		TabLine = { fg = muted, bg = gray },
+		StatusLine = { fg = text, bg = "NONE" },
+		StatusLineNC = { fg = muted, bg = "NONE" },
+		TabLineSel = { fg = text, bg = "NONE", bold = true },
+		TabLineFill = { bg = "NONE" },
+		TabLine = { fg = muted, bg = "NONE" },
 		Visual = { bg = gray, bold = true },
 		VisualNOS = { bg = gray },
 
 		-- Popups & Menus
-		Pmenu = { fg = text, bg = dark_gray },
+		Pmenu = { fg = text, bg = "NONE" },
 		PmenuSel = { fg = black, bg = yellow, bold = true },
 		PmenuSbar = { bg = gray },
 		PmenuThumb = { bg = light_gray },
@@ -74,71 +78,72 @@ local function apply_everblush_black()
 		GitSignsCurrentLineBlame = { fg = muted, bg = "NONE" },
 
 		-- Telescope
-		TelescopeNormal = { fg = text, bg = black },
-		TelescopeBorder = { fg = gray, bg = black },
-		TelescopePromptNormal = { fg = text, bg = black },
-		TelescopePromptBorder = { fg = gray, bg = black },
+		TelescopeNormal = { fg = text, bg = "NONE" },
+		TelescopeBorder = { fg = gray, bg = "NONE" },
+		TelescopeTitle = { fg = blue, bg = "NONE", bold = true },
+		TelescopePromptNormal = { fg = text, bg = "NONE" },
+		TelescopePromptBorder = { fg = gray, bg = "NONE" },
 		TelescopePromptTitle = { fg = black, bg = blue, bold = true },
-		TelescopePromptPrefix = { fg = red, bg = black },
-		TelescopeResultsNormal = { fg = text, bg = black },
-		TelescopeResultsBorder = { fg = gray, bg = black },
+		TelescopePromptPrefix = { fg = red, bg = "NONE" },
+		TelescopeResultsNormal = { fg = text, bg = "NONE" },
+		TelescopeResultsBorder = { fg = gray, bg = "NONE" },
 		TelescopeResultsTitle = { fg = black, bg = green, bold = true },
-		TelescopePreviewNormal = { fg = text, bg = black },
-		TelescopePreviewBorder = { fg = gray, bg = black },
+		TelescopePreviewNormal = { fg = text, bg = "NONE" },
+		TelescopePreviewBorder = { fg = gray, bg = "NONE" },
 		TelescopePreviewTitle = { fg = black, bg = yellow, bold = true },
 		TelescopeSelection = { fg = text, bg = dark_gray, bold = true },
 
 		-- Neo-tree
-		NeoTreeNormal = { fg = text, bg = black },
-		NeoTreeNormalNC = { fg = text, bg = black },
-		NeoTreeEndOfBuffer = { fg = black, bg = black },
-		NeoTreeWinSeparator = { fg = gray, bg = black },
-		NeoTreeFloatNormal = { fg = text, bg = black },
-		NeoTreeFloatBorder = { fg = light_gray, bg = black },
-		NeoTreeFloatTitle = { fg = blue, bg = black, bold = true },
+		NeoTreeNormal = { fg = text, bg = "NONE" },
+		NeoTreeNormalNC = { fg = text, bg = "NONE" },
+		NeoTreeEndOfBuffer = { fg = "NONE", bg = "NONE" },
+		NeoTreeWinSeparator = { fg = gray, bg = "NONE" },
+		NeoTreeFloatNormal = { fg = text, bg = "NONE" },
+		NeoTreeFloatBorder = { fg = light_gray, bg = "NONE" },
+		NeoTreeFloatTitle = { fg = blue, bg = "NONE", bold = true },
 		NeoTreeCursorLine = { bg = dark_gray },
 
 		-- Blink CMP
-		BlinkCmpMenu = { fg = text, bg = black },
-		BlinkCmpMenuBorder = { fg = light_gray, bg = black },
-		BlinkCmpDoc = { fg = text, bg = black },
-		BlinkCmpDocBorder = { fg = light_gray, bg = black },
-		BlinkCmpSignatureHelp = { fg = text, bg = black },
-		BlinkCmpSignatureHelpBorder = { fg = light_gray, bg = black },
+		BlinkCmpMenu = { fg = text, bg = "NONE" },
+		BlinkCmpMenuBorder = { fg = light_gray, bg = "NONE" },
+		BlinkCmpDoc = { fg = text, bg = "NONE" },
+		BlinkCmpDocBorder = { fg = light_gray, bg = "NONE" },
+		BlinkCmpSignatureHelp = { fg = text, bg = "NONE" },
+		BlinkCmpSignatureHelpBorder = { fg = light_gray, bg = "NONE" },
 
 		-- WhichKey
-		WhichKeyNormal = { fg = text, bg = black },
-		WhichKeyBorder = { fg = light_gray, bg = black },
-		WhichKeyTitle = { fg = blue, bg = black },
+		WhichKeyNormal = { fg = text, bg = "NONE" },
+		WhichKeyBorder = { fg = light_gray, bg = "NONE" },
+		WhichKeyTitle = { fg = blue, bg = "NONE" },
 
 		-- Trouble
-		TroubleNormal = { fg = text, bg = black },
-		TroubleNormalNC = { fg = text, bg = black },
-		LspTroubleNormal = { fg = text, bg = black },
+		TroubleNormal = { fg = text, bg = "NONE" },
+		TroubleNormalNC = { fg = text, bg = "NONE" },
+		LspTroubleNormal = { fg = text, bg = "NONE" },
 
 		-- Glance
-		GlanceWinBarFilename = { fg = text, bg = black },
-		GlanceWinBarFilepath = { fg = muted, bg = black },
-		GlanceWinBarTitle = { fg = blue, bg = black },
-		GlanceListNormal = { fg = text, bg = black },
-		GlanceListBorderBottom = { fg = gray, bg = black },
-		GlanceListEndOfBuffer = { fg = black, bg = black },
+		GlanceWinBarFilename = { fg = text, bg = "NONE" },
+		GlanceWinBarFilepath = { fg = muted, bg = "NONE" },
+		GlanceWinBarTitle = { fg = blue, bg = "NONE" },
+		GlanceListNormal = { fg = text, bg = "NONE" },
+		GlanceListBorderBottom = { fg = gray, bg = "NONE" },
+		GlanceListEndOfBuffer = { fg = "NONE", bg = "NONE" },
 		GlanceListCursorLine = { bg = dark_gray },
-		GlancePreviewNormal = { fg = text, bg = black },
-		GlancePreviewBorderBottom = { fg = gray, bg = black },
-		GlancePreviewEndOfBuffer = { fg = black, bg = black },
-		GlanceBorderTop = { fg = gray, bg = black },
-		GlanceIndent = { fg = muted, bg = black },
-		GlanceFoldIcon = { fg = blue, bg = black },
+		GlancePreviewNormal = { fg = text, bg = "NONE" },
+		GlancePreviewBorderBottom = { fg = gray, bg = "NONE" },
+		GlancePreviewEndOfBuffer = { fg = "NONE", bg = "NONE" },
+		GlanceBorderTop = { fg = gray, bg = "NONE" },
+		GlanceIndent = { fg = muted, bg = "NONE" },
+		GlanceFoldIcon = { fg = blue, bg = "NONE" },
 
 		-- Treesitter Context
-		TreesitterContext = { bg = dark_gray },
-		TreesitterContextLineNumber = { fg = muted, bg = dark_gray },
+		TreesitterContext = { bg = "NONE" },
+		TreesitterContextLineNumber = { fg = muted, bg = "NONE" },
 		TreesitterContextBottom = { underline = true, sp = light_gray },
 
 		-- Fzf Lua
-		FzfLuaNormal = { fg = text, bg = black },
-		FzfLuaBorder = { fg = light_gray, bg = black },
+		FzfLuaNormal = { fg = text, bg = "NONE" },
+		FzfLuaBorder = { fg = light_gray, bg = "NONE" },
 	}
 
 	for group, opts in pairs(highlights) do
@@ -150,32 +155,32 @@ local function apply_everblush_black()
 		normal = {
 			a = { bg = magenta, fg = black, gui = "bold" },
 			b = { bg = dark_gray, fg = cyan },
-			c = { bg = black, fg = text },
+			c = { bg = "NONE", fg = text },
 		},
 		insert = {
 			a = { bg = green, fg = black, gui = "bold" },
 			b = { bg = dark_gray, fg = green },
-			c = { bg = black, fg = text },
+			c = { bg = "NONE", fg = text },
 		},
 		visual = {
 			a = { bg = yellow, fg = black, gui = "bold" },
 			b = { bg = dark_gray, fg = yellow },
-			c = { bg = black, fg = text },
+			c = { bg = "NONE", fg = text },
 		},
 		replace = {
 			a = { bg = red, fg = black, gui = "bold" },
 			b = { bg = dark_gray, fg = red },
-			c = { bg = black, fg = text },
+			c = { bg = "NONE", fg = text },
 		},
 		command = {
 			a = { bg = blue, fg = black, gui = "bold" },
 			b = { bg = dark_gray, fg = blue },
-			c = { bg = black, fg = text },
+			c = { bg = "NONE", fg = text },
 		},
 		inactive = {
-			a = { bg = black, fg = muted, gui = "bold" },
-			b = { bg = black, fg = muted },
-			c = { bg = black, fg = muted },
+			a = { bg = "NONE", fg = muted, gui = "bold" },
+			b = { bg = "NONE", fg = muted },
+			c = { bg = "NONE", fg = muted },
 		},
 	}
 
@@ -190,11 +195,43 @@ local function apply_everblush_black()
 	end
 end
 
+local function make_transparent()
+	local transparent_groups = {
+		"Normal", "NormalNC", "NormalFloat", "FloatBorder", "FloatTitle",
+		"FloatShadow", "FloatShadowThrough", "SignColumn", "LineNr", "CursorLineNr",
+		"EndOfBuffer", "MsgArea", "MsgSeparator", "WinSeparator", "VertSplit",
+		"StatusLine", "StatusLineNC", "TabLine", "TabLineFill", "TabLineSel",
+		"WinBar", "WinBarNC", "Pmenu",
+		"TelescopeNormal", "TelescopeBorder", "TelescopeTitle",
+		"TelescopePromptNormal", "TelescopePromptBorder", "TelescopePromptPrefix",
+		"TelescopeResultsNormal", "TelescopeResultsBorder",
+		"TelescopePreviewNormal", "TelescopePreviewBorder",
+		"NeoTreeNormal", "NeoTreeNormalNC", "NeoTreeEndOfBuffer", "NeoTreeWinSeparator",
+		"NeoTreeFloatNormal", "NeoTreeFloatBorder", "NeoTreeFloatTitle",
+		"BlinkCmpMenu", "BlinkCmpMenuBorder", "BlinkCmpDoc", "BlinkCmpDocBorder",
+		"BlinkCmpSignatureHelp", "BlinkCmpSignatureHelpBorder",
+		"WhichKeyNormal", "WhichKeyBorder", "WhichKeyTitle",
+		"TroubleNormal", "TroubleNormalNC", "LspTroubleNormal",
+		"GlanceWinBarFilename", "GlanceWinBarFilepath", "GlanceWinBarTitle",
+		"GlanceListNormal", "GlanceListBorderBottom", "GlanceListEndOfBuffer",
+		"GlancePreviewNormal", "GlancePreviewBorderBottom", "GlancePreviewEndOfBuffer",
+		"GlanceBorderTop", "GlanceIndent", "GlanceFoldIcon",
+		"FzfLuaNormal", "FzfLuaBorder",
+		"TreesitterContext", "TreesitterContextLineNumber",
+	}
+	for _, group in ipairs(transparent_groups) do
+		local hl = vim.api.nvim_get_hl(0, { name = group, link = false })
+		hl.bg = nil
+		vim.api.nvim_set_hl(0, group, hl)
+	end
+end
+
 vim.api.nvim_create_autocmd("ColorScheme", {
 	callback = function(args)
 		if args.match == "everblush" then
 			apply_everblush_black()
 		else
+			make_transparent()
 			local ok, lualine = pcall(require, "lualine")
 			if ok then
 				pcall(lualine.setup, {
