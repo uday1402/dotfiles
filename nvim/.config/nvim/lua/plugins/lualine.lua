@@ -48,6 +48,11 @@ return {
 
 				lualine_x = {
 					daily_line_counter.status,
+					function()
+						local ok, picker = pcall(require, "config.ai_model_picker")
+						if ok then return picker.status() end
+						return ""
+					end,
 					supermaven_status,
 					"encoding",
 					"fileformat",

@@ -146,6 +146,23 @@ local function apply_everblush_black()
 		-- Fzf Lua
 		FzfLuaNormal = { fg = text, bg = "NONE" },
 		FzfLuaBorder = { fg = light_gray, bg = "NONE" },
+
+		-- AI Model Picker
+		AiPickerNormal = { fg = text, bg = "NONE" },
+		AiPickerBorder = { fg = gray, bg = "NONE" },
+		AiPickerTitle = { fg = black, bg = blue, bold = true },
+		AiPickerResultTitle = { fg = black, bg = green, bold = true },
+		AiPickerPreviewTitle = { fg = black, bg = yellow, bold = true },
+		AiPickerSelection = { fg = text, bg = navy_select, bold = true },
+		AiPickerPromptPrefix = { fg = red, bg = "NONE" },
+		AiPickerCurrent = { fg = green, bold = true },
+		AiPickerFree = { fg = cyan },
+		AiPickerPremium = { fg = yellow },
+		AiPickerModelName = { fg = text, bold = true },
+		AiPickerModelDesc = { fg = muted },
+		AiPickerIcon = { fg = magenta },
+		AiPickerPreviewKey = { fg = blue, bold = true },
+		AiPickerPreviewVal = { fg = text },
 	}
 
 	for group, opts in pairs(highlights) do
@@ -220,6 +237,7 @@ local function make_transparent()
 		"GlanceBorderTop", "GlanceIndent", "GlanceFoldIcon",
 		"FzfLuaNormal", "FzfLuaBorder",
 		"TreesitterContext", "TreesitterContextLineNumber",
+		"AiPickerNormal", "AiPickerBorder",
 	}
 	for _, group in ipairs(transparent_groups) do
 		local hl = vim.api.nvim_get_hl(0, { name = group, link = false })
