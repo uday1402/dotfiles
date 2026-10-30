@@ -20,7 +20,8 @@ require("lazy").setup({
         { import = "plugins" },
     },
     checker = {
-        enabled = true,
+        enabled = false, -- turns off the lazy update checking
+        notify = false,
     },
     -- None of the configured plugins need LuaRocks. Avoid probing and managing
     -- an unused toolchain during plugin resolution.
