@@ -13,3 +13,6 @@ require("config.colorscheme")
 
 require("config.lazy")
 
+-- Non-Mason LSP servers (installed outside Mason's registry)
+require("config.lsp.csv")
+

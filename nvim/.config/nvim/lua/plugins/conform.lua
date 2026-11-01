@@ -33,6 +33,7 @@ local format_on_save_filetypes = {
 	mysql = true,
 	plsql = true,
 	dockerfile = true,
+	csv = true,
 }
 
 return {
@@ -95,6 +96,7 @@ return {
 			sql = { "sql_formatter" },
 			mysql = { "sql_formatter" },
 			plsql = { "sql_formatter" },
+			csv = { "csvfmt" },
 		},
 		formatters = {
 			-- clang-format defaults to two-space indentation. Keep four spaces for
@@ -109,6 +111,10 @@ return {
 				env = {
 					PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc.json",
 				},
+			},
+			csvfmt = {
+				command = "csvfmt",
+				stdin = true,
 			},
 		},
 	},
