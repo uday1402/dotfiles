@@ -60,6 +60,39 @@ local function terminal_title()
 	return ""
 end
 
+-- Dynamically generates a transparent lualine theme matching the editor background
+local function get_transparent_lualine_theme()
+	local colors_name = vim.g.colors_name or "auto"
+	if colors_name == "everblush" and package.loaded["lualine.themes.everblush"] then
+		return package.loaded["lualine.themes.everblush"]
+	end
+
+	package.loaded["lualine.themes.auto"] = nil
+	local ok, auto = pcall(require, "lualine.themes.auto")
+	if not ok or type(auto) ~= "table" then
+		return "auto"
+	end
+
+	local theme = vim.deepcopy(auto)
+	for _, mode in pairs(theme) do
+		if type(mode) == "table" then
+			for sname, s in pairs(mode) do
+				if type(s) == "table" and sname ~= "a" then
+					s.bg = "NONE"
+				end
+			end
+		end
+	end
+	if theme.inactive then
+		for _, s in pairs(theme.inactive) do
+			if type(s) == "table" then
+				s.bg = "NONE"
+			end
+		end
+	end
+	return theme
+end
+
 -- ----------------------------------------------------------------------------
 -- Plugin Specification & Configuration
 -- ----------------------------------------------------------------------------
@@ -77,8 +110,8 @@ return {
 
 		opts = {
 			options = {
-				-- Dynamically synchronizes colors with the active theme
-				theme = "auto",
+				-- Dynamically synchronizes colors with active theme, keeping background transparent to match editor
+				theme = get_transparent_lualine_theme,
 				-- Single persistent statusline spanning all splits across the bottom
 				globalstatus = true,
 				-- Flat modern aesthetic without bulky powerline arrow glyphs
