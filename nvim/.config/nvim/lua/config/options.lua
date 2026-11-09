@@ -84,3 +84,11 @@ vim.g.have_nerd_font = true
 
 -- see :help confirm
 vim.o.confirm = true
+
+-- Compose needs its own filetype so yamlls cannot compete with the compose LSP.
+vim.filetype.add({
+	pattern = {
+		[".*/docker%-compose%.ya?ml"] = "yaml.docker-compose",
+		[".*/compose%.ya?ml"] = "yaml.docker-compose",
+	},
+})

@@ -2,7 +2,6 @@
 
 ---@type vim.lsp.Config
 local config = {
-	capabilities = require("blink.cmp").get_lsp_capabilities(),
 	---@param params lsp.InitializeParams
 	before_init = function(params)
 		-- clangd 22 deprecated this extension in favor of the standard LSP 3.17

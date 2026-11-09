@@ -1,6 +1,30 @@
--- Autoformat with project-local tools when available, falling back to Mason's
--- PATH entries. LSP formatting remains the fallback for filetypes without a
--- dedicated formatter (notably Dockerfiles).
+-- ============================================================================
+-- Plugin: conform.nvim
+-- Purpose: Fast, lightweight code formatter with support for external formatters
+--          and LSP formatting fallbacks.
+--
+-- Formatting Keymaps:
+--   <leader>xf (n, v) - Format entire buffer (Normal) or selected lines (Visual)
+--   <leader>tf        - Toggle autoformat-on-save globally (:FormatToggle)
+--   <leader>tF        - Toggle autoformat-on-save for current buffer only (:FormatToggle!)
+--
+-- User Commands:
+--   :FormatToggle     - Toggle autoformat-on-save globally (use ! for current buffer)
+--   :FormatDisable    - Disable autoformat-on-save globally (use ! for current buffer)
+--   :FormatEnable     - Enable autoformat-on-save globally (use ! for current buffer)
+--   :ConformInfo      - View active formatters and log status
+--
+-- Configured Formatters:
+--   • Lua: stylua
+--   • Python: isort, black
+--   • C / C++: clang-format (4-space indentation)
+--   • Web (HTML/CSS/JS/TS/JSON/YAML/Markdown): prettierd / prettier
+--   • Shell (sh/bash/zsh): shfmt
+--   • SQL: sql_formatter
+--   • CSV: csvfmt
+--   • Fallback: Language Server Protocol (LSP)
+-- ============================================================================
+
 local prettier = { "prettierd", "prettier", stop_after_first = true }
 
 local format_on_save_filetypes = {
@@ -24,8 +48,6 @@ local format_on_save_filetypes = {
 	["yaml.docker-compose"] = true,
 	["yaml.gitlab"] = true,
 	["yaml.helm-values"] = true,
-	-- markdown = true,
-	-- mdx = true,
 	sh = true,
 	bash = true,
 	zsh = true,
@@ -36,10 +58,91 @@ local format_on_save_filetypes = {
 	csv = true,
 }
 
+local function toggle_autoformat(bufnr)
+	if bufnr then
+		local current = vim.b[bufnr].disable_autoformat
+		if current == nil then
+			current = vim.g.disable_autoformat
+		end
+		vim.b[bufnr].disable_autoformat = not current
+		local state = vim.b[bufnr].disable_autoformat and "disabled" or "enabled"
+		vim.notify("Buffer autoformat " .. state, vim.log.levels.INFO, { title = "Formatting" })
+	else
+		vim.g.disable_autoformat = not vim.g.disable_autoformat
+		local state = vim.g.disable_autoformat and "disabled" or "enabled"
+		vim.notify("Global autoformat " .. state, vim.log.levels.INFO, { title = "Formatting" })
+	end
+end
+
 return {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
-	cmd = { "ConformInfo" },
+	cmd = {
+		"ConformInfo",
+		"FormatToggle",
+		"FormatEnable",
+		"FormatDisable",
+	},
+
+	keys = {
+		{
+			"<leader>xf",
+			function()
+				require("conform").format({ async = true, lsp_format = "fallback" })
+			end,
+			mode = { "n", "v" },
+			desc = "Format buffer / selection",
+		},
+		{
+			"<leader>tf",
+			function()
+				toggle_autoformat()
+			end,
+			desc = "Toggle autoformat-on-save (global)",
+		},
+		{
+			"<leader>tF",
+			function()
+				toggle_autoformat(vim.api.nvim_get_current_buf())
+			end,
+			desc = "Toggle autoformat-on-save (buffer)",
+		},
+	},
+
+	init = function()
+		vim.api.nvim_create_user_command("FormatToggle", function(args)
+			toggle_autoformat(args.bang and vim.api.nvim_get_current_buf() or nil)
+		end, {
+			desc = "Toggle autoformat-on-save (use ! for buffer only)",
+			bang = true,
+		})
+
+		vim.api.nvim_create_user_command("FormatDisable", function(args)
+			if args.bang then
+				vim.b.disable_autoformat = true
+			else
+				vim.g.disable_autoformat = true
+			end
+			vim.notify("Autoformat disabled" .. (args.bang and " (buffer)" or " (global)"), vim.log.levels.WARN, { title = "Formatting" })
+		end, {
+			desc = "Disable autoformat-on-save",
+			bang = true,
+		})
+
+		vim.api.nvim_create_user_command("FormatEnable", function(args)
+			if args.bang then
+				vim.b.disable_autoformat = false
+			else
+				vim.g.disable_autoformat = false
+				vim.b.disable_autoformat = nil
+			end
+			vim.notify("Autoformat enabled" .. (args.bang and " (buffer)" or " (global)"), vim.log.levels.INFO, { title = "Formatting" })
+		end, {
+			desc = "Re-enable autoformat-on-save",
+			bang = true,
+		})
+	end,
+
 	opts = {
 		notify_on_error = false,
 		format_on_save = function(bufnr)
@@ -99,8 +202,6 @@ return {
 			csv = { "csvfmt" },
 		},
 		formatters = {
-			-- clang-format defaults to two-space indentation. Keep four spaces for
-			-- C and C++ when formatting on save (and when formatting manually).
 			clang_format = {
 				prepend_args = { "--style={IndentWidth: 4}" },
 			},

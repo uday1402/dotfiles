@@ -2,7 +2,6 @@
 
 ---@type vim.lsp.Config
 local config = {
-	capabilities = require("blink.cmp").get_lsp_capabilities(),
 	---@type lspconfig.settings.lua_ls
 	settings = {
 		Lua = {

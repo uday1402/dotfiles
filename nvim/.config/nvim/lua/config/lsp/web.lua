@@ -129,16 +129,6 @@ local function sqlls_cmd(dispatchers)
 	}, dispatchers)
 end
 
--- Compose needs its own filetype so yamlls cannot compete with the compose LSP.
-vim.filetype.add({
-	pattern = {
-		[".*/docker%-compose%.yaml"] = "yaml.docker-compose",
-		[".*/docker%-compose%.yml"] = "yaml.docker-compose",
-		[".*/compose%.yaml"] = "yaml.docker-compose",
-		[".*/compose%.yml"] = "yaml.docker-compose",
-	},
-})
-
 return {
 	-- Keep explicit keys for all web/data servers so this table is the single
 	-- place to discover their local overrides. Empty entries retain upstream
@@ -175,10 +165,15 @@ return {
 	eslint = {},
 	jsonls = {
 		filetypes = { "json", "jsonc", "json5" },
+		before_init = function(_, config)
+			config.settings = vim.tbl_deep_extend("force", config.settings or {}, {
+				json = {
+					schemas = schema_catalog("json"),
+				},
+			})
+		end,
 		settings = {
-			json = {
-				schemas = schema_catalog("json"),
-			},
+			json = {},
 		},
 	},
 	tailwindcss = {
@@ -202,12 +197,21 @@ return {
 			end
 			on_dir(vim.fs.root(bufnr, { ".git" }) or parent_dir(bufnr))
 		end,
+		before_init = function(_, config)
+			config.settings = vim.tbl_deep_extend("force", config.settings or {}, {
+				redhat = { telemetry = { enabled = false } },
+				yaml = {
+					format = { enable = true },
+					schemaStore = { enable = false, url = "" },
+					schemas = schema_catalog("yaml"),
+				},
+			})
+		end,
 		settings = {
 			redhat = { telemetry = { enabled = false } },
 			yaml = {
 				format = { enable = true },
 				schemaStore = { enable = false, url = "" },
-				schemas = schema_catalog("yaml"),
 			},
 		},
 	},

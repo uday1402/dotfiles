@@ -132,10 +132,6 @@ local openrouter_models = {
 	},
 }
 
--- Register this model list with the AI model selector
-local picker = require("config.ai_model_picker")
-picker.set_models(openrouter_models)
-
 return {
 	{
 		"olimorris/codecompanion.nvim",
@@ -158,12 +154,18 @@ return {
 			{
 				"<leader>im",
 				function()
-					require("config.ai_model_picker").open()
+					local picker = require("config.ai_model_picker")
+					picker.set_models(openrouter_models)
+					picker.open()
 				end,
 				mode = { "n" },
 				desc = "AI: Switch Model (Telescope)",
 			},
 		},
+		config = function(_, opts)
+			require("config.ai_model_picker").set_models(openrouter_models)
+			require("codecompanion").setup(opts)
+		end,
 		opts = {
 			-- Target all interaction types (chat, inline, cmd) to openrouter
 			interactions = {

@@ -147,6 +147,10 @@ local function apply_everblush_black()
 		FzfLuaNormal = { fg = text, bg = "NONE" },
 		FzfLuaBorder = { fg = light_gray, bg = "NONE" },
 
+		-- Hover.nvim
+		HoverWindow = { fg = text, bg = "NONE" },
+		HoverBorder = { fg = light_gray, bg = "NONE" },
+
 		-- AI Model Picker
 		AiPickerNormal = { fg = text, bg = "NONE" },
 		AiPickerBorder = { fg = gray, bg = "NONE" },
@@ -238,6 +242,7 @@ local function make_transparent()
 		"FzfLuaNormal", "FzfLuaBorder",
 		"TreesitterContext", "TreesitterContextLineNumber",
 		"AiPickerNormal", "AiPickerBorder",
+		"HoverWindow", "HoverBorder",
 	}
 	for _, group in ipairs(transparent_groups) do
 		local hl = vim.api.nvim_get_hl(0, { name = group, link = false })
@@ -278,12 +283,17 @@ local function restore_last_colorscheme()
 	end
 end
 
-vim.api.nvim_create_autocmd("User", {
-	pattern = "LazyDone",
-	once = true,
-	nested = true,
-	callback = restore_last_colorscheme,
-})
+-- Restore colorscheme immediately if lazy is loaded, or on LazyDone
+if package.loaded["lazy"] then
+	restore_last_colorscheme()
+else
+	vim.api.nvim_create_autocmd("User", {
+		pattern = "LazyDone",
+		once = true,
+		nested = true,
+		callback = restore_last_colorscheme,
+	})
+end
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
 	callback = function()

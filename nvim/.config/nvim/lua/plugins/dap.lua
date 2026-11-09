@@ -1,3 +1,25 @@
+-- ============================================================================
+-- Plugin: nvim-dap (with nvim-dap-ui, nvim-dap-virtual-text, nvim-dap-python)
+-- Purpose: Debug Adapter Protocol (DAP) integration for Neovim. Provides full
+--          IDE-grade debugging with breakpoints, stepping, variable inspection,
+--          REPL, call stacks, and inline virtual text.
+--
+-- Supported Languages:
+--   • Python: via debugpy / nvim-dap-python (uv tool or mason)
+--   • C / C++: via CodeLLDB (launch binary, launch with args, attach to pid)
+--   • JS / TS: via js-debug-adapter (Node launch/attach, Chrome browser debug)
+--
+-- Keymaps (<leader>d):
+--   <leader>db - Toggle breakpoint on current line
+--   <leader>dc - Continue execution / start debug session
+--   <leader>dn - Step over (next line)
+--   <leader>di - Step into (enter function call)
+--   <leader>do - Step out (finish and leave current function)
+--   <leader>dt - Terminate active debug session
+--   <leader>dr - Toggle interactive DAP REPL window
+--   <leader>du - Toggle DAP UI dashboard (scopes, stacks, watches, console)
+-- ============================================================================
+
 return {
 	{
 		"mfussenegger/nvim-dap",
@@ -95,6 +117,7 @@ return {
 		end,
 	},
 
+	-- UI layout manager for DAP: scopes, stacks, watches, breakpoints, and console
 	{
 		"rcarriga/nvim-dap-ui",
 		lazy = true,
@@ -105,7 +128,7 @@ return {
 
 			dapui.setup()
 
-			-- Auto open/close DAP UI
+			-- Automatically open UI panels when debugging starts, and close on exit/terminate
 			dap.listeners.after.event_initialized["dapui_config"] = function()
 				dapui.open()
 			end
@@ -118,16 +141,17 @@ return {
 		end,
 	},
 
+	-- Inline variable values displayed as end-of-line virtual text while debugging
 	{
 		"theHamsta/nvim-dap-virtual-text",
 		lazy = true,
 		dependencies = { "mfussenegger/nvim-dap", "nvim-treesitter/nvim-treesitter" },
 		opts = {
-			commented = true,
-			only_first_definition = true,
-			all_references = false,
-			clear_on_continue = false,
-			virt_text_pos = "eol",
+			commented = true,              -- Prefix virtual text with comment syntax
+			only_first_definition = true,  -- Show virtual text only for the first variable declaration
+			all_references = false,        -- Avoid repeating virtual text on every reference
+			clear_on_continue = false,     -- Keep virtual text visible while running until next break
+			virt_text_pos = "eol",         -- Display variable values at the end of the line
 		},
 	},
 }

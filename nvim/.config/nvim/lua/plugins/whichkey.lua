@@ -1,7 +1,23 @@
+-- ============================================================================
+-- Plugin: which-key.nvim (v3)
+-- Purpose: Interactive popup cheatsheet that displays available keybindings and
+--          sub-commands in real time as you press key prefixes.
+--
+-- How to Use:
+--   - Press <leader> (Space) in Normal/Visual mode to show top-level key groups.
+--   - Press any configured prefix (e.g., <leader>f, <leader>x, gr) to see all
+--     commands registered under that group.
+--   - Run :WhichKey to interactively search through all registered keymaps.
+--
+-- Popup Controls (when which-key window is visible):
+--   <BS>      - Go back to the previous key group level
+--   <Esc>     - Dismiss / cancel the cheatsheet popup
+-- ============================================================================
+
 return {
 	{
 		"folke/which-key.nvim",
-		event = "VimEnter",
+		event = "VeryLazy",
 		---@module 'which-key'
 		---@type wk.Opts
 		opts = {
@@ -36,6 +52,7 @@ return {
 				{ "gr", group = "LSP Actions", mode = { "n" } },
 				{ "<leader>D", group = "[D]evDocs", mode = { "n" } },
 				{ "<leader>m", group = "[M]arkdown", mode = { "n" } },
+				{ "<leader>T", group = "[T]erminal", mode = { "n" } },
 			},
 		},
 	},

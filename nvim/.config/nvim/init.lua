@@ -1,18 +1,28 @@
--- decides what to load on bootstrap(this is the entrypoint)
--- each line inside this file is a bootstrapping command for the folders(lua treats every file as a module, and require("file_name") is similar to the import module command(py)
+-- Bytecode caching for faster startup
+if vim.loader then
+	vim.loader.enable()
+end
 
--- Leader key(needs to be setup before the lazy loading)
+-- Leader key (needs to be setup before the lazy loading)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- order of loading the modules matters!(DO NOT CHANGE)
+-- Core configurations
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
-require("config.colorscheme")
 
+-- Plugin manager
 require("config.lazy")
 
--- Non-Mason LSP servers (installed outside Mason's registry)
-require("config.lsp.csv")
+-- Colorscheme setup (after lazy so themes are available)
+require("config.colorscheme")
 
+-- Non-Mason LSP servers (loaded on demand for CSV filetypes)
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "csv", "tsv", "ssv", "psv" },
+	once = true,
+	callback = function()
+		require("config.lsp.csv")
+	end,
+})
