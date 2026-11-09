@@ -16,9 +16,6 @@ vim.env.PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc.jso
 -- Disable autoformat-on-save by default
 vim.g.disable_autoformat = true
 
--- Tabline (always show; used by tabby.nvim + mouse tab clicks)
-opt.showtabline = 2
-
 -- Lualine already displays the current mode
 opt.showmode = false
 

@@ -38,13 +38,15 @@ setopt PUSHD_IGNORE_DUPS
 # ----------------------------
 # Aliases
 # ----------------------------
-alias ls="ls -p"
 alias ll="ls -lah"
 alias la="ls -A"
 alias l="ls -C"
 alias notes='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/ApexOS/" && nvim'
 alias vault='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/"'
+alias jupyter='uv run jupyter lab'
+alias ls="ls -hp"
 
+alias ml="z ml && source .venv/bin/activate && echo 'Run Jupyter? (type jupyter)'"
 # ----------------------------
 # help (bash-like help for shell builtins)
 # ---------------------------
@@ -117,3 +119,5 @@ eval "$(zoxide init zsh)"
 
 # Hermes Agent command
 case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac
+
+tmux
