@@ -42,7 +42,7 @@ alias ll="ls -lah"
 alias la="ls -A"
 alias l="ls -C"
 alias notes='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/ApexOS/" && nvim'
-alias vault='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/"'
+alias vaultSync='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/AlphaOS/" && git add . && git commit -a -m "Vault Sync" && git push && z'
 alias jupyter='uv run jupyter lab'
 alias ls="ls -hp"
 
