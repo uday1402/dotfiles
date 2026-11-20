@@ -47,6 +47,13 @@ alias jupyter='uv run jupyter lab'
 alias ls="ls -hp"
 
 alias ml="z ml && source .venv/bin/activate && echo 'Run Jupyter? (type jupyter)'"
+
+# Eza configuration
+alias ls='eza --icons --group-directories-first'
+alias ll='eza -lah --icons --group-directories-first --git'
+alias la='eza -a --icons --group-directories-first'
+alias lt='eza --tree --level=2 --icons'
+alias ltree='eza --tree --icons'
 # ----------------------------
 # help (bash-like help for shell builtins)
 # ---------------------------
