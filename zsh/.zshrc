@@ -54,6 +54,9 @@ alias ll='eza -lah --icons --group-directories-first --git'
 alias la='eza -a --icons --group-directories-first'
 alias lt='eza --tree --level=2 --icons'
 alias ltree='eza --tree --icons'
+
+# fd-find(find substitute)
+alias fd='fdfind'
 # ----------------------------
 # help (bash-like help for shell builtins)
 # ---------------------------
