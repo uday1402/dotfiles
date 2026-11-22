@@ -130,3 +130,13 @@ eval "$(zoxide init zsh)"
 # Hermes Agent command
 case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac
 
+
+# Obsidian: copy files to AlphaOS vault inbox
+obcp() {
+  local dest="/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/AlphaOS/00_inbox"
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: obcp <file>..." >&2
+    return 1
+  fi
+  cp "$@" "$dest/" && echo "Copied to AlphaOS/00_inbox/"
+}
