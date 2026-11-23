@@ -19,3 +19,6 @@ fd -t d                  # Find directories only
 fd -H                    # Include hidden files
 fd -I                    # Include ignored files
 fd -e c -x wc -l         # Count lines in every C file
+
+# Obsidian
+Wrapper for Obsidian CLI was built with the help of Opus 4.6, and `obcp` command copies the argument file into the vault location on Windows, so you can access it with CLI or Obsidian app itself.
