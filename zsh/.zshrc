@@ -140,3 +140,13 @@ obcp() {
   fi
   cp "$@" "$dest/" && echo "Copied to AlphaOS/00_inbox/"
 }
+
+# Yazi shell wrapper (changes cwd on exit)
+function y() {
+	local tmp cwd
+	tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || builtin true
+	command rm -f -- "$tmp"
+}
