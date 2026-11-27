@@ -38,25 +38,29 @@ setopt PUSHD_IGNORE_DUPS
 # ----------------------------
 # Aliases
 # ----------------------------
-alias ll="ls -lah"
-alias la="ls -A"
-alias l="ls -C"
 alias notes='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/ApexOS/" && nvim'
 alias vaultSync='cd "/mnt/c/Users/udays_5dfwue0/Developer/Obsidian Vault/AlphaOS/" && git add . && git commit -a -m "Vault Sync" && git push && z'
 alias jupyter='uv run jupyter lab'
-alias ls="ls -hp"
-
 alias ml="z ml && source .venv/bin/activate && echo 'Run Jupyter? (type jupyter)'"
 
-# Eza configuration
-alias ls='eza --icons --group-directories-first'
-alias ll='eza -lah --icons --group-directories-first --git'
-alias la='eza -a --icons --group-directories-first'
-alias lt='eza --tree --level=2 --icons'
-alias ltree='eza --tree --icons'
+# Eza / ls configuration
+if command -v eza &>/dev/null; then
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -lah --icons --group-directories-first --git'
+    alias la='eza -a --icons --group-directories-first'
+    alias lt='eza --tree --level=2 --icons'
+    alias ltree='eza --tree --icons'
+else
+    alias ls="ls -hp"
+    alias ll="ls -lah"
+    alias la="ls -A"
+    alias l="ls -C"
+fi
 
-# fd-find(find substitute)
-alias fd='fdfind'
+# fd-find (find substitute)
+if command -v fdfind &>/dev/null && ! command -v fd &>/dev/null; then
+    alias fd='fdfind'
+fi
 # ----------------------------
 # help (bash-like help for shell builtins)
 # ---------------------------
@@ -94,15 +98,21 @@ autoload -Uz colors
 colors
 
 # eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
+fi
 
 # fzf
-source /usr/share/doc/fzf/examples/completion.zsh
-source /usr/share/doc/fzf/examples/key-bindings.zsh
+if [[ -f /usr/share/doc/fzf/examples/completion.zsh || -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
+    [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
+    [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+elif command -v fzf &>/dev/null && fzf --zsh &>/dev/null; then
+    source <(fzf --zsh)
+fi
 
 # zsh plugins
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 autoload -Uz select-word-style
 select-word-style shell
@@ -118,14 +128,16 @@ bindkey '^[[5C' forward-word    # Ctrl+Right (alternative)
 bindkey '^[[1;3D' backward-word # Alt+Left (some terminals)
 bindkey '^[[1;3C' forward-word  # Alt+Right (some terminals)
 
-. "$HOME/.local/bin/env"
+[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
 # openrouter claude cli integration
 export PATH="$HOME/.npm-global/bin:$PATH"
 [[ -f "$HOME/.config/secrets/env.zsh" ]] &&
     source "$HOME/.config/secrets/env.zsh"
 
-eval "$(zoxide init zsh)"
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init zsh)"
+fi
 
 # Hermes Agent command
 case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac

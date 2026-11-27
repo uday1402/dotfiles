@@ -1,0 +1,2 @@
+"\C-w": backward-kill-word
+"\C-h": backward-delete-char
